@@ -18,7 +18,62 @@
 </head>
 
 <body>
-  This is working
+  <div class="screen screen--visible">
+    <div class="screen--heraldry">
+      <div class="heraldry--left">
+        <!-- <h4 id="blazon" class="blazon"></h4 -->
+        <div class="state__knights--choosen">
+          <div class="state__knights--choosen__slot"></div>
+          <div class="state__knights--choosen__slot"></div>
+        </div>
+        <button class="host-battle__button">Host Battle</button>
+      </div>
+      <div class="heraldry--right">
+        <div class="heraldry__state">
+          <h2>Knights</h2>
+          <div class="state__knights">
+          </div>
+        </div>
+        <div class="heraldry__coat-of-arms-creator">
+          <ul class="heraldry__templates">
+            <li><img /></li>
+            <li><img /></li>
+            <li><img /></li>
+            <li><img /></li>
+            <li><img /></li>
+            <li><img /></li>
+            <li><img /></li>
+            <li><img /></li>
+          </ul>
+          <canvas></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="screen screen--tournament">
+    <div class="battlefield">
+      <div class="battlefield__audience">
+        <canvas></canvas>
+        <div class="battlefield__audience__data">
+          <h4 class="battlefield__audience__meter">1</h4>
+          <h4 class="battlefield__audience__excitement">
+            &#128513; <span>0</span>
+          </h4>
+        </div>
+      </div>
+      <div class="battlefield__knights">
+
+      </div>
+      <div class="battlefield__cards">
+        <div class="battlefield__cards__attack card"><h3 class="card__value">0</h3></div>
+        <div class="battlefield__cards__slot visible"></div>
+      </div>
+      <div class="tournament__hand">
+        <ul></ul>
+        <button class="tournament__hand__refill" onclick="refillHand()">Refill Hand</button>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>

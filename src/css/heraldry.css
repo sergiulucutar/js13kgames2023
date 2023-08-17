@@ -1,0 +1,131 @@
+
+.screen--heraldry {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  width: 100%;
+  height: 100%;
+}
+
+.blazon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 5vw;
+
+  text-align: center;
+}
+
+.heraldry--left {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.heraldry--right {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: #C9D0C8;
+}
+
+.heraldry__coat-of-arms-creator {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  height: 100%;
+}
+
+.heraldry__coat-of-arms-creator--visible {
+  display: flex;
+}
+
+.heraldry--right canvas {
+  width: 440px;
+  height: 440px;
+}
+
+.heraldry__templates {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+}
+
+.heraldry__templates li {
+  border-radius: 5px;
+  transition: all 0.2s var(--ease-out);
+}
+
+.heraldry__templates li:hover {
+  background-color: white;
+  transform: scale(1.1);
+}
+
+.heraldry__templates img {
+  width: 100px;
+  height: 100px;
+
+  margin: 4px;
+}
+
+.state__knights {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.state__knight {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 150px;
+
+  margin: 10px;
+  padding: 4px;
+  border-radius: 5px;
+  background-color: transparent;
+
+  transition: background-color 0.2s var(--ease-out);
+}
+
+.state__knight:hover {
+  background-color: white;
+}
+
+.state__knight__name {
+  margin: 0;
+  text-align: center;
+  pointer-events: none;
+}
+
+.heraldry__state h2 {
+  margin: 40px 0;
+  margin-left: 20px;
+}
+
+.state__knights--choosen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.state__knights--choosen__slot {
+  min-width: 150px;
+  min-height: 177px;
+
+  margin: 10px;
+  border-radius: 4px;
+
+  background-color: #C9D0C8;
+}
+
+.host-battle__button {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+}
