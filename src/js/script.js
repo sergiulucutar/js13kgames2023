@@ -31,6 +31,8 @@ window.onload = () => {
   tournament.renderBattle();
   // generateCoatOfArms();
 
+  const audienceCanvas = new AudienceCanvas();
+
   window.pickCard = cardIndex => tournament.pickCard(cardIndex);
 
   window.refillHand = () => tournament.refillHand();
@@ -49,5 +51,9 @@ window.onload = () => {
     .addEventListener('click', () => {
       heraldryScreen.classList.remove('screen--visible');
       tournamentScreen.classList.add('screen--visible');
+
+      audienceCanvas.init();
+      audienceCanvas.addExcitment(8);
+      audienceCanvas.animate();
     });
 };

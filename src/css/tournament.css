@@ -1,6 +1,6 @@
 .battlefield {
   display: grid;
-  grid-template-rows: 23.6fr 23.6fr 38.2fr 14.6fr;
+  grid-template-rows: repeat(4, 1fr);
   
   width: 100%;
   height: 100%;
@@ -16,13 +16,33 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  z-index: -1;
+  /* z-index: -1; */
+}
+
+.audience__emoji {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.emoji {
+  position: absolute;
+  border-radius: 20px;
+  padding: 4px;
+  background-color: white;
+  font-size: 2rem;
 }
 
 .battlefield__audience__data {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+
+  z-index: 5;
 }
 
 .battlefield__audience__meter {
@@ -33,9 +53,39 @@
   background-color: white;
 }
 
+.battlefield__audience__excitement {
+  padding: 4px;
+  margin: 10px;
+  font-size: 3rem;
+  font-weight: bold;
+  background-color: white;
+}
+
 .battlefield__knights {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+}
+
+.battlefield__knights .state__knight {
+  position: relative;
+}
+
+.battlefield__knights .state__knight:nth-child(1) {
+  left: 300px
+}
+
+.battlefield__knights .state__knight:nth-child(2) {
+  right: 300px
+}
+
+.battlefield__knights .state__knight--attacked img {
+  content: '';
+  position: absolute;
+  widows: 100%;
+  height: 100%;
+
+  background-color: red;
+  opacity: 0.4;
 }
 
 .battlefield__cards {
@@ -48,7 +98,7 @@
 .battlefield__cards__slot {
   display: none;
   width: 150px;
-  height: 330px;
+  height: 150px;
   margin: 10px;
 
   animation: select-card 0.6s linear infinite alternate;
@@ -90,7 +140,7 @@
   align-items: center;
 
   width: 150px;
-  height: 330px;
+  height: 150px;
   margin: 10px;
 
   border-radius: 4px;
@@ -100,7 +150,7 @@
 }
 
 .tournament__hand .card:hover {
-  transform: translateY(-50%);
+  transform: translateY(-20%);
 }
 
 .card--ar {
@@ -145,6 +195,10 @@
 
 .card--ar::before {
   border-color: black;
+}
+
+.card h3 {
+  margin: 0;
 }
 
 @keyframes select-card {

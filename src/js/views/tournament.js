@@ -2,6 +2,8 @@ class Tournament {
   constructor(state) {
     this.state = state;
 
+    this.battleRing = new BattleRing(state);
+
     this.currentBattle = {
       attackingKnightIndex: 0,
       audience: {
@@ -31,6 +33,7 @@ class Tournament {
   }
 
   initBattle() {
+    this.battleRing.init();
     this.currentBattle.deck = [...this.state.defaultDeck];
     this.drawUntilFull();
     this.generateAttackCard();
@@ -43,7 +46,6 @@ class Tournament {
 
   nextBattleStep() {
     this.currentBattle.strikesCount++;
-    console.log('Strike: ', this.currentBattle.strikesCount);
     if (this.currentBattle.strikesCount >= 5) {
       this.endBattle();
       return;
@@ -51,10 +53,12 @@ class Tournament {
 
     this.currentBattle.attackingKnightIndex =
       +!this.currentBattle.attackingKnightIndex;
+    this.battleRing.initAttack(this.currentBattle.attackingKnightIndex);
     this.generateAttackCard();
     this.currentBattle.discardPile.push(this.currentBattle.selectedCard);
     this.currentBattle.selectedCard = '';
     this._renderCommittedCards();
+    this.battleRing._render();
   }
 
   generateAttackCard() {
@@ -91,11 +95,6 @@ class Tournament {
   }
 
   renderBattle() {
-    const knightsEl = document.querySelector('.battlefield__knights');
-    this.state.selectedKnights.forEach(knight => {
-      const divEl = getKnightRendering(knight);
-      knightsEl.appendChild(divEl);
-    });
     this._renderHand();
   }
 
@@ -161,6 +160,7 @@ class Tournament {
     }
     this.currentBattle.audience.meter = max;
     this._renderAudience();
+    this.battleRing.attackResolved();
   }
 
   _renderHand() {
