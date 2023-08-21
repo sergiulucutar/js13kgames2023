@@ -190,21 +190,25 @@ class State {
       'ar3',
       'ar4',
       'ar5',
+      'ar6',
       'sa1',
       'sa2',
       'sa3',
       'sa4',
-      'sa5',
+      'ar5',
+      'ar6',
       'gu1',
       'gu2',
       'gu3',
       'gu4',
       'gu5',
+      'gu6',
       'pu1',
       'pu2',
       'pu3',
       'pu4',
-      'pu5'
+      'pu5',
+      'pu6'
     ];
   }
 
