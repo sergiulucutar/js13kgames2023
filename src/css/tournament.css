@@ -63,19 +63,11 @@
 
 .battlefield__knights {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
 }
 
 .battlefield__knights .state__knight {
   position: relative;
-}
-
-.battlefield__knights .state__knight:nth-child(1) {
-  left: 300px
-}
-
-.battlefield__knights .state__knight:nth-child(2) {
-  right: 300px
 }
 
 .battlefield__knights .state__knight--attacked img {
@@ -91,14 +83,21 @@
 .battlefield__cards {
   display: flex;
   justify-content: center;
+  align-items: center;
 
   padding: 20px;
 }
 
+.battlefield__cards__wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .battlefield__cards__slot {
   display: none;
-  width: 150px;
-  height: 150px;
+  height: 250px;
+  width: 180px;
   margin: 10px;
 
   animation: select-card 0.6s linear infinite alternate;
@@ -106,6 +105,21 @@
 
 .battlefield__cards__slot.visible {
   display: block;
+}
+
+.battlefield__cards__committed {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.battlefield__cards__controls {
+  display: flex;
+  flex-direction: column;
+}
+
+.battlefield__cards__controls button {
+  margin: 5px;
 }
 
 .tournament__hand {
@@ -135,12 +149,13 @@
 .card {
   position: relative;
 
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
   align-items: center;
+  justify-content: center;
 
-  width: 150px;
-  height: 150px;
+  height: 250px;
+  width: 180px;
   margin: 10px;
 
   border-radius: 4px;
@@ -177,6 +192,10 @@
   /* font-size: 1.8rem; */
 }
 
+.card--flip {
+  background-color: #859277;
+}
+
 .card--ar .card__value {
   background-color: black;
   color: white;
@@ -185,6 +204,8 @@
 .card::before {
   content: '';
   position: absolute;
+  top: 10px;
+  left: 10px;
   width: calc(100% - 20px);
   height: calc(100% - 20px);
 
@@ -199,6 +220,23 @@
 
 .card h3 {
   margin: 0;
+  min-width: auto;
+}
+
+.card > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card em {
+  padding: 14px;
+  color: white;
+  text-align: center;
+}
+
+.card--ar em {
+  color: black;
 }
 
 @keyframes select-card {
@@ -209,4 +247,57 @@
   to {
     background-color: white;
   }
+}
+
+
+.hype-meter {
+  position: relative;
+  display: flex;
+  height: 60px;
+
+  overflow: hidden;
+}
+
+.hype-meter li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100px;
+  height: 40px;
+  padding: 10px;
+
+  color: black;
+  background-color: white;
+}
+
+.hype-meter li:not(:first-child) {
+  border-left: 1px solid black;
+}
+
+.hype-meter__marker__audience {
+  position: absolute;
+  top: 40px;
+
+  transition: transform 0.4s var(--ease-out);
+}
+
+.hype-meter__marker__audience div {
+  width: 500px;
+  height: 15px;
+  background-color: #CA3C25;
+  border: 3px solid white;
+
+  transform: translateX(calc(-50% + 50px));
+}
+
+.hype-meter__marker__preview {
+  position: absolute;
+  top: 10px;
+  width: 100%;
+  height: 20px;
+
+  background-color: #859277;
+  transform: translateX(-100%);
+  transition: transform 0.4s var(--ease-out);
 }

@@ -1,0 +1,3 @@
+class CardRenderer {
+  renderCard(card) {}
+}

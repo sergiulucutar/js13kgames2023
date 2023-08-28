@@ -1,5 +1,14 @@
 :root {
   --ease-out: cubic-bezier(0.33, 1, 0.68, 1);
+  --c_background: #F1EFE4;
+  --c_primary: #5C6D70;
+  --c_primary_v: #484A47;
+  --c_secondary: #A37774;
+  --c_secondary_v: #E88873;
+  --c_ternary: #b09f79;
+
+  --s: 0.8vw; /* control the size */
+  --_g: #0000 83%,var(--c_ternary) 85% 99%,#0000 101%;
 }
 
 *, *::after, *::before {
@@ -50,7 +59,7 @@ button {
   padding: 8px 16px;
   border-radius: 5px;
 
-  background-color: #1B1B1E;
+  background-color: var(--c_secondary);
   font-family: Helvetica, sans-serif;
   font-size: 1rem;
 
@@ -58,12 +67,14 @@ button {
 }
 
 button:hover {
-  background-color: #6D676E;
+  background-color: var(--c_secondary_v);
 }
 
 ul {
   margin: 0;
   padding: 0;
+
+  list-style: none;
 }
 
 .host-tournament-button {

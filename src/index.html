@@ -17,37 +17,61 @@
   <!-- endbuild -->
 </head>
 
-<body>
+<body oncontextmenu="event => event.preventDefault()">
   <div class="screen screen--visible">
     <div class="screen--heraldry">
-      <div class="heraldry--left">
-        <!-- <h4 id="blazon" class="blazon"></h4 -->
-        <div class="state__knights--choosen">
-          <div class="state__knights--choosen__slot"></div>
-          <div class="state__knights--choosen__slot"></div>
-        </div>
-        <button class="host-battle__button">Host Battle</button>
-      </div>
-      <div class="heraldry--right">
-        <div class="heraldry__state">
-          <h2>Knights</h2>
-          <div class="state__knights">
+      <section class="heraldry--left">
+        <div class="event">
+          <div class="event__flavor"></div>
+          <header class="event__ribbon">
+            <div class="event__name">
+              <strong class="event__year">1251</strong>
+              <h1>The 12 Kings Feast</h1>
+            </div>
+          </header>
+          <div class="event__subtitle">
+            <em></em>
+          </div>
+          <div class="event__tournament">
+            <ul>
+            </ul>
           </div>
         </div>
-        <div class="heraldry__coat-of-arms-creator">
-          <ul class="heraldry__templates">
-            <li><img /></li>
-            <li><img /></li>
-            <li><img /></li>
-            <li><img /></li>
-            <li><img /></li>
-            <li><img /></li>
-            <li><img /></li>
-            <li><img /></li>
-          </ul>
-          <canvas></canvas>
+        <button class="host-battle__button">Host Battle</button>
+      </section>
+      <section class="heraldry--right">
+        <div class="reputation">
+          <div class="reputation__track">
+            <ul>
+            </ul>
+            <div class="reputation__track__meter"></div>
+          </div>
+          <div class="reputation__level">1</div>
         </div>
-      </div>
+        <div class="abilities">
+          <ul>
+            <li class="ability ability--unlocked">
+              <div class="ability__checkmark"></div>
+            </li>
+            <li class="ability">
+              <div class="ability__checkmark"></div>
+            </li>
+            <li class="ability">
+              <div class="ability__checkmark"></div>
+            </li>
+            <li class="ability">
+              <div class="ability__checkmark"></div>
+            </li>
+            <li class="ability">
+              <div class="ability__checkmark"></div>
+            </li>
+          </ul>
+        </div>
+        <!-- <div class="heraldry__state">  
+          <div class="state__knights">
+          </div>
+        </div> -->
+      </section>
     </div>
   </div>
   <div class="screen screen--tournament">
@@ -57,18 +81,37 @@
         <div class="audience__emoji">
         </div>
         <div class="battlefield__audience__data">
-          <h4 class="battlefield__audience__meter">1</h4>
+          <ul class="hype-meter">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+            <li>6</li>
+            <li>7</li>
+            <li>8</li>
+            <li>9</li>
+            <li>10(+)</li>
+            <div class="hype-meter__marker__audience"><div></div></div>
+            <div class="hype-meter__marker__preview"></div>
+          </ul>
           <h4 class="battlefield__audience__excitement">
             &#128513; <span>0</span>
           </h4>
         </div>
       </div>
       <div class="battlefield__knights">
-
       </div>
       <div class="battlefield__cards">
-        <div class="battlefield__cards__attack card"><h3 class="card__value">0</h3></div>
-        <div class="battlefield__cards__slot visible"></div>
+        <div class="battlefield__cards__wrapper">
+          <div class="battlefield__cards__attack card"><h3 class="card__value">0</h3></div>
+          <div class="battlefield__cards__slot visible"></div>
+          <div class="battlefield__cards__committed"></div>
+        </div>
+        <div class="battlefield__cards__controls">
+          <button onclick="takeBack()">Take back</button>
+          <button onclick="commitCards()">Commit</button>
+        </div>
       </div>
       <div class="tournament__hand">
         <ul></ul>

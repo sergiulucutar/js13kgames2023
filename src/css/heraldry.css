@@ -7,16 +7,6 @@
   height: 100%;
 }
 
-.blazon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  padding: 5vw;
-
-  text-align: center;
-}
-
 .heraldry--left {
   position: relative;
   display: flex;
@@ -28,48 +18,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  background-color: #C9D0C8;
-}
-
-.heraldry__coat-of-arms-creator {
-  display: none;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  height: 100%;
-}
-
-.heraldry__coat-of-arms-creator--visible {
-  display: flex;
-}
-
-.heraldry--right canvas {
-  width: 440px;
-  height: 440px;
-}
-
-.heraldry__templates {
-  display: flex;
-  flex-wrap: wrap;
-  list-style: none;
-}
-
-.heraldry__templates li {
-  border-radius: 5px;
-  transition: all 0.2s var(--ease-out);
-}
-
-.heraldry__templates li:hover {
-  background-color: white;
-  transform: scale(1.1);
-}
-
-.heraldry__templates img {
-  width: 100px;
-  height: 100px;
-
-  margin: 4px;
+  background-color: var(--c_primary);  
 }
 
 .state__knights {
@@ -90,10 +39,6 @@
   background-color: transparent;
 
   transition: background-color 0.2s var(--ease-out);
-}
-
-.state__knight:hover {
-  background-color: white;
 }
 
 .state__knight__name {
@@ -128,4 +73,223 @@
   bottom: 50px;
   left: 50%;
   transform: translateX(-50%);
+}
+
+.event {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.event__flavor {
+  width: 100%;
+  height: 10%;
+
+  background:
+    radial-gradient(27% 29% at right ,var(--_g)) calc(var(--s)/ 2) var(--s),
+    radial-gradient(27% 29% at left  ,var(--_g)) calc(var(--s)/-2) var(--s),
+    radial-gradient(29% 27% at top   ,var(--_g)) 0 calc(var(--s)/ 2),
+    radial-gradient(29% 27% at bottom,var(--_g)) 0 calc(var(--s)/-2)
+    var(--c_primary_v);
+  background-size: calc(2*var(--s)) calc(2*var(--s));
+}
+
+.event__ribbon {
+  position: relative;
+
+  width: 100%;
+  height: 40px;
+
+  background-color: var(--c_secondary);
+}
+
+.event__ribbon::before {
+  content: '';
+  position: absolute;
+  top: -5%;
+  left: 0;
+  width: 100%;
+  height: 110%;
+
+  border-top: 1px solid var(--c_secondary);
+  border-bottom: 1px solid var(--c_secondary);
+}
+
+.event__ribbon::after {
+  content: '';
+  position: absolute;
+  top: 5%;
+  left: 0;
+  width: 100%;
+  height: 90%;
+
+  border-top: 2px dashed var(--c_background);
+  border-bottom: 2px dashed var(--c_background);
+}
+
+.event__name {
+  position: relative;
+}
+
+.event__name h1 {
+  position: absolute;
+  margin: 0;
+  margin-left: 10px;
+}
+
+.event__year {
+  color: var(--c_background);
+  font-size: 1.6rem;
+
+  margin-left: 10px;
+}
+
+.event__subtitle {
+  display: grid;
+  grid-template-columns: 50% repeat(3, 1fr);
+  width: 100%;
+
+  margin-top: 10%;
+}
+
+.event__subtitle em {
+  grid-column: 2 / span 2;
+}
+
+.event__tournament {
+  margin: 10% 0;
+}
+
+.event__tournament li {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  font-size: 1.4rem;
+}
+
+.event__tournament li span {
+  grid-column: 2 / -1;
+}
+
+.reputation {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: 10%;
+}
+
+.reputation__track {
+  grid-column: 1 / span 3;
+
+  position: relative;
+  height: 40px;
+  margin: 0 40px;
+  border-radius: 5px;
+  padding: 4px 0;
+
+  border: 2px solid var(--c_ternary);
+  overflow: hidden;
+}
+
+.reputation__track__meter {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+
+  background-color: var(--c_ternary);
+  transition: transform 0.2s var(--ease-out);
+}
+
+.reputation__track ul {
+  display: flex;
+  height: 100%;
+
+  /* background-color: var(--c_primary_v); */
+}
+
+.reputation__track__step {
+  height: 100%;
+  flex: 1 1 auto;
+}
+
+.reputation__track__step:not(:last-child) {
+  border-right: 1px solid var(--c_ternary);
+}
+
+.reputation__level {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 160px;
+  height: 160px;
+
+  border: 5px dashed var(--c_ternary);
+  border-radius: 50%;
+
+  background-color: var(--c_primary_v);
+  color: var(--c_background);
+  font-family: Garamond, serif;
+  font-size: 5rem;
+
+  transform: translateY(-50%);
+}
+
+.reputation__level::after {
+  content: '';
+  position: absolute;
+  width: 200px;
+  height: 200px;
+
+  border: 2px solid var(--c_ternary);
+  border-radius: 50%;
+}
+
+.abilities {
+  padding: 20px;
+}
+
+.abilities ul {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+}
+
+.ability {
+  height: 200px;
+  padding: 10px;
+
+  border-radius: 10px;
+  border: 2px solid var(--c_ternary);
+
+  flex: 1 1 auto;
+}
+
+.ability--unlocked {
+  background-color: var(--c_primary_v);
+}
+
+.ability__checkmark {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.ability__checkmark::after {
+  content: '';
+  position: absolute;
+  width: 120%;
+  height: 120%;
+
+  border-radius: 50%;
+  border: 1px solid var(--c_ternary);
+}
+
+.ability--unlocked .ability__checkmark {
+  background-color: var(--c_ternary);
 }

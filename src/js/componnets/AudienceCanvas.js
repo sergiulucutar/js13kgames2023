@@ -26,6 +26,7 @@ class AudienceCanvas {
 
     this.headSize = 20;
     this.perRow = Math.round(window.innerWidth / 23);
+    this.init();
   }
 
   init() {
@@ -51,7 +52,7 @@ class AudienceCanvas {
         skinColor: randomSkinColor,
         clothsColor: [randomClothColor1, randomClothColor2],
         size,
-        excitmentLevel: random(4, 9),
+        excitementLevel: random(4, 9),
         jumpingAnimationOffset: 0
       });
     }
@@ -63,9 +64,9 @@ class AudienceCanvas {
     requestAnimationFrame(this.animate.bind(this));
   }
 
-  addExcitment(level) {
+  addExcitement(level) {
     this.people.forEach(
-      pep => pep.excitmentLevel <= level && (pep.jumpingAnimationOffset = 1)
+      pep => pep.excitementLevel <= level && (pep.jumpingAnimationOffset = 1)
     );
 
     const emojiCount = 20;
