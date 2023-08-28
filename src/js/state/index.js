@@ -1,5 +1,11 @@
 class State {
   constructor() {
+    this.level = 1;
+    this.reputation = {
+      earned: 0,
+      required: 3
+    };
+
     this.knights = [
       {
         name: 'Geoffrey of Wycliffe',
@@ -134,7 +140,6 @@ class State {
         }
       }
     ];
-
     this.selectedKnights = [
       {
         name: 'Marllow of WhiteCastle',
@@ -214,5 +219,37 @@ class State {
 
   selectKnight(knight) {
     this.selectedKnights.push(knight);
+  }
+
+  addEarnedReputation(amount) {
+    this.reputation.earned += amount;
+
+    if (this.reputation.earned >= this.reputation.required) {
+      this.level += 1;
+      this.reputation.required = this._getReputationRequired(this.level);
+      this.reputation.earned -= this.reputation.required;
+      this.reputation.earned = Math.max(0, this.reputation.earned);
+    } else if (this.reputation.earned < 0) {
+      this.level -= 1;
+      this.level = Math.max(1, this.level);
+      this.reputation.required = this._getReputationRequired(this.level);
+      this.reputation.earned += this.reputation.required;
+    }
+
+    console.log('amount ', amount, this.reputation, this.level);
+  }
+
+  _getReputationRequired(level) {
+    let a = 1,
+      b = 1,
+      result = 2;
+    while (level > 0) {
+      result = a + b;
+      a = b;
+      b = result;
+      level -= 1;
+    }
+
+    return result;
   }
 }

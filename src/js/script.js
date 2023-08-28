@@ -26,24 +26,19 @@ window.onload = () => {
   const state = new State();
   const heraldry = new Herardly(state);
   const tournament = new Tournament(state);
-  heraldry.showState();
-  tournament.initBattle();
-  tournament.renderBattle();
-  // generateCoatOfArms();
+  // heraldry.showState();
 
-  const audienceCanvas = new AudienceCanvas();
-
-  window.pickCard = cardIndex => tournament.pickCard(cardIndex);
-
-  window.refillHand = () => tournament.refillHand();
+  window.addEventListener('contextmenu', e => e.preventDefault());
 
   window.selectKnight = knight => {
     heraldry.selectKnight(knight);
   };
 
-  window.onBattleEnded = () => {
+  window.onBattleEnded = data => {
     heraldryScreen.classList.add('screen--visible');
     tournamentScreen.classList.remove('screen--visible');
+    state.addEarnedReputation(data.generatedExcitement);
+    heraldry.render();
   };
 
   document
@@ -52,8 +47,6 @@ window.onload = () => {
       heraldryScreen.classList.remove('screen--visible');
       tournamentScreen.classList.add('screen--visible');
 
-      audienceCanvas.init();
-      audienceCanvas.addExcitment(8);
-      audienceCanvas.animate();
+      tournament.initBattle();
     });
 };
