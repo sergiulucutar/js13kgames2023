@@ -3,9 +3,9 @@ class BattleMelee {
     this.state = state;
     this.attackingKnightIndex = 0;
     this.audience = {
-      meter: 1,
+      meter: 0,
       excitement: 0,
-      margin: 2
+      margin: 1
     };
 
     this.attackCard = '';
@@ -22,9 +22,7 @@ class BattleMelee {
     this.battleRing.init(this.attackingKnightIndex, 5);
 
     /* DOM ELEMENTS */
-    this.attackValueEL = document.querySelector(
-      '.battlefield__cards__attack h3'
-    );
+    this.cardsEl = document.querySelector('.battlefield__cards__wrapper');
     this.battlefieldCards = document.querySelector(
       '.battlefield__cards__committed'
     );
@@ -40,6 +38,8 @@ class BattleMelee {
     );
 
     this.generateAttackCard();
+    this._renderPlaceHolders();
+
     this.hand.drawUntilFull();
     this.hand.render();
     this._renderAudience();
@@ -49,32 +49,49 @@ class BattleMelee {
   }
 
   generateAttackCard() {
-    this.attackValueEL.parentElement.classList.remove.apply(
-      this.attackValueEL.parentElement.classList,
-      Array.from(this.attackValueEL.parentElement.classList).filter(v =>
-        v.startsWith('card--')
-      )
-    );
-
-    const attackValue = random(1, 6);
-    this.attackCard = attackValue;
-    this.attackValueEL.textContent = attackValue;
+    this.attackCard = random(2, 6);
   }
 
   getCommittedCardsTotal() {
-    return this.committedCards.reduce((sum, card) => {
-      if (card === 'flip') {
-        sum += 1;
-      } else {
-        sum += parseInt(card[2] || 0);
+    let sum = 0;
+    this.committedCards.forEach((card, index) => {
+      sum += card.value;
+
+      // Add card power if it gives hype
+      switch (card.powerIndex) {
+        case 2:
+          if (index === 0) {
+            sum += 1;
+          }
+          break;
+        case 3:
+          if (this.committedCards.length === 1) {
+            sum += 2;
+          }
+          break;
+        case 5:
+          sum += index + 1;
+          break;
+        default:
       }
-      return sum;
-    }, 0);
+
+      // Add suit power if it's completed and gives hype
+      if (index < this.committedCards.length - 1) {
+        if (
+          card.meta.isRightActive &&
+          card.colorRight === COLORS_PREFIX.gules
+        ) {
+          sum += 2;
+        }
+      }
+    });
+    console.log('SUM ', sum);
+    return sum;
   }
 
   takeBack() {
     if (this.committedCards.length) {
-      const card = this.committedCards.pop();
+      const card = this.committedCards.pop().card;
       if (card === 'flip') {
         this.hand.addCard(this._flippedCommittedCard.pop());
       } else {
@@ -90,8 +107,6 @@ class BattleMelee {
     this.strikesCount++;
 
     if (this.strikesCount >= 8) {
-      console.log('GENERATED excitement ', this.audience.excitement);
-
       onBattleEnded({
         generatedExcitement: this.audience.excitement
       });
@@ -112,9 +127,9 @@ class BattleMelee {
     this.generateAttackCard();
     this.hand.addToDiscard(this.selectedCard);
     this.selectedCard = '';
+    this._renderPlaceHolders();
 
     this.battleRing._render();
-    this._renderCommittedCardsReset();
     this._renderAudienceHypePreview();
   }
 
@@ -136,17 +151,19 @@ class BattleMelee {
 
   resolveAttack() {
     const { audience } = this;
-    let max = this.getCommittedCardsTotal();
+    let committedValue = this.getCommittedCardsTotal();
 
-    const hypeDifference = max - audience.meter;
-    const generatedExcitement =
-      hypeDifference - audience.margin * Math.sign(hypeDifference);
+    audience.meter += this._getCommittedCardBonus();
+    const hypeDifference = committedValue - audience.meter;
 
+    let generatedExcitement = 0;
     if (Math.abs(hypeDifference) > audience.margin) {
+      generatedExcitement =
+        hypeDifference - this.audience.margin * Math.sign(hypeDifference);
       audience.excitement += generatedExcitement;
     }
 
-    audience.meter = max;
+    audience.meter = Math.max(0, committedValue);
     this._resolveSelectedCardPower(hypeDifference, generatedExcitement);
     this.hand.render();
     this._renderAudience();
@@ -154,52 +171,59 @@ class BattleMelee {
   }
 
   _resolveSelectedCardPower(generatedHype, generatedExcitement) {
-    this.committedCards.forEach(card => {
-      const cardValue = parseInt(card[2]);
-      switch (cardValue) {
-        case 1:
-          if (generatedHype >= 3) {
+    this.committedCards.forEach((card, index) => {
+      switch (card.powerIndex) {
+        case 0:
+          if (this.audience.meter >= 3) {
             this.hand.addCard(this.hand.drawRandomCard());
           }
           break;
-        case 2:
+        case 1:
           if (generatedExcitement > 0) {
             this.audience.excitement += 1;
           }
           break;
         case 4:
-          this.hand.addCard(this.hand.drawRandomCard());
-          this.hand.addCard(this.hand.drawRandomCard());
-          break;
-        case 5:
-          this.audience.meter += 1;
-          if (this.commitCards.length === 1) {
-            this.audience.meter += 2;
+          if (index === this.committedCards.length - 1) {
+            this.hand.addCard(this.hand.drawRandomCard());
           }
           break;
-
         case 6:
-          this.audience.meter += 2;
-          this.refillHand();
+          if (card.meta.isLeftActive && card.meta.isRightActive) {
+            this.audience.excitement += 2;
+          }
           break;
         default:
       }
     });
   }
 
-  pickCard(index, flip) {
+  pickCard(index) {
     if (index !== null) {
-      if (!flip && this._isAttackValueExceeded(index)) {
+      if (this.commitCards.length >= this.attackCard) {
         return;
       }
 
       const card = this.hand.pickCard(index);
-      if (flip) {
-        this.committedCards.push('flip');
-        this._flippedCommittedCard.push(card);
-      } else {
-        this.committedCards.push(card);
+
+      this.committedCards.push({
+        ...card,
+        meta: {
+          isLeftActive: false,
+          isRightActive: false
+        }
+      });
+
+      if (this.committedCards.length >= 2) {
+        const currentCard = this.committedCards[this.committedCards.length - 1];
+        const prevCard = this.committedCards[this.committedCards.length - 2];
+        currentCard.meta.isLeftActive = this._isCardComponentActive(
+          currentCard,
+          prevCard
+        );
+        prevCard.meta.isRightActive = currentCard.meta.isLeftActive;
       }
+
       this.hand.render();
       this._renderLastPickedCard();
     }
@@ -212,45 +236,59 @@ class BattleMelee {
     return cardPowerText[parseInt(cardValue) - 1].power || '';
   }
 
-  _isAttackValueExceeded(newCardIndex) {
-    const currentSum = this.getCommittedCardsTotal();
-    const newCardValue = parseInt(this.hand.cards[newCardIndex][2]);
-    return this.attackCard < currentSum + newCardValue;
+  _getCommittedCardBonus() {
+    let bonus = 0;
+    if (this.committedCards[4]) {
+      bonus += 1;
+    }
+
+    if (this.committedCards[5]) {
+      bonus += 2;
+    }
+
+    return bonus;
+  }
+
+  _isCardComponentActive(card, testCard, testLeftSize = true) {
+    if (testLeftSize) {
+      return testCard.colorRight === card.colorLeft;
+    }
+    return card.colorRight === testCard.colorLeft;
   }
 
   _renderAudience() {
     this.audienceMeterEl.style.transform = `translateX(${
-      (this.audience.meter - 1) * 100
+      this.audience.meter * 100
     }px)`;
     this.audienceExcitementEl.textContent = this.audience.excitement;
   }
 
   _renderAudienceHypePreview() {
-    const totalCommitted = this.getCommittedCardsTotal();
+    let totalCommitted = this.getCommittedCardsTotal();
+    totalCommitted += this._getCommittedCardBonus();
+
     this.audienceHypePreviewEl.style.transform = `translateX(-${
       1000 - totalCommitted * 100
     }px)`;
   }
 
   _renderLastPickedCard() {
-    this.slotCardEl.classList.remove('visible');
-    const pickedCard = this.committedCards[this.committedCards.length - 1];
-    const card = document.createElement('div');
-    card.classList.add('card');
-    if (pickedCard === 'flip') {
-      card.classList.add('card--flip');
-    } else {
-      card.classList.add(`card--${pickedCard[0] + pickedCard[1]}`);
-      card.innerHTML = `<div><h3 class="card__value">${pickedCard[2]}</h3></div>
-      <em>${this._getCardPowerText(pickedCard[2])}</em>`;
-    }
-    this.battlefieldCards.appendChild(card);
+    const index = this.committedCards.length - 1;
+    const pickedCard = this.committedCards[index];
+    const card = cardRenderer.getCardEl(pickedCard);
+    this.cardsEl
+      .querySelector(`.card__slot:nth-child(${index + 1})`)
+      .appendChild(card);
   }
 
-  _renderCommittedCardsReset() {
-    this.battlefieldCards.innerHTML = '';
-    this.slotCardEl.classList.add('visible');
+  _renderPlaceHolders() {
+    let html = '';
+    for (let i = 0; i < this.attackCard; i++) {
+      html += '<div class="card__slot"></div>';
+    }
+    this.cardsEl.innerHTML = html;
   }
+
   _registerEvents() {
     window.commitCards = () => this.commitCards();
     window.pickCard = (cardIndex, event) => {

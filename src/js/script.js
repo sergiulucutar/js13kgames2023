@@ -8,6 +8,13 @@ var COLORS = {
   or: 7
 };
 
+var COLORS_PREFIX = {
+  gules: 'gu',
+  purpur: 'pu',
+  sable: 'sa',
+  argent: 'ar'
+};
+
 var ZONES = {
   chief: 'c',
   fesse: 'f',

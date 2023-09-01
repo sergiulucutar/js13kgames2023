@@ -215,6 +215,8 @@ class State {
       'pu5',
       'pu6'
     ];
+
+    this.defaultDeck = this._generateDefaultDeck();
   }
 
   selectKnight(knight) {
@@ -235,8 +237,6 @@ class State {
       this.reputation.required = this._getReputationRequired(this.level);
       this.reputation.earned += this.reputation.required;
     }
-
-    console.log('amount ', amount, this.reputation, this.level);
   }
 
   _getReputationRequired(level) {
@@ -251,5 +251,24 @@ class State {
     }
 
     return result;
+  }
+
+  _generateDefaultDeck() {
+    const deck = [];
+    const colorEntries = Object.entries(COLORS_PREFIX);
+    for (let i = 0; i < 20; i++) {
+      const randomColor1 = colorEntries[random(0, colorEntries.length)][1];
+      const randomColor2 = colorEntries[random(0, colorEntries.length)][1];
+      const randomPower = random(0, cardPowerText.length);
+
+      deck.push({
+        value: random(0, 4),
+        colorLeft: randomColor1,
+        colorRight: randomColor2,
+        powerIndex: randomPower
+      });
+    }
+
+    return deck;
   }
 }
