@@ -1,21 +1,27 @@
 var cardPowerText = [
   {
-    power: 'Draw 1 if the generated hype is >= 3'
+    power: 'Draw 1 if you generate 3 or more hype'
   },
   {
     power: 'If you generate excitement, generate 1 more'
   },
   {
-    power: ''
+    power: 'If this is in position 1, gain 1 hype'
   },
   {
-    power: 'Draw 2 cards'
+    power: '+2 hype if this is the only card committed'
   },
   {
-    power: '+1 hype. +2 hype if this is the only card committed'
+    power: 'If this is in the last position, draw 1 card'
   },
   {
-    power: '+2 hype. Refill hand'
+    power: '+X hype, where X is the position of the card slot'
+  },
+  // {
+  //   power: 'Next round, lose 0 excitement if this is placed last'
+  // }
+  {
+    power: '+2 excitement if both components of this card are active'
   }
 ];
 

@@ -46,16 +46,11 @@ class Hand {
   }
 
   render() {
-    let html = '';
+    this.el.innerHTML = '';
     this.cards.forEach((card, index) => {
-      html += `<li class="card card--hand card--${
-        card[0] + card[1]
-      }" onmousedown="pickCard(${index}, event)" oncontextmenu="return false;"><div><h3 class="card__value">${
-        card[2]
-      }</h3></div>
-      <em>${this._getCardPowerText(card[2])}</em>
-      </li>`;
+      const cardEl = cardRenderer.getCardEl(card);
+      cardEl.addEventListener('mousedown', event => pickCard(index, event));
+      this.el.appendChild(cardEl);
     });
-    this.el.innerHTML = html;
   }
 }

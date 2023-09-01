@@ -67,10 +67,6 @@
             </li>
           </ul>
         </div>
-        <!-- <div class="heraldry__state">  
-          <div class="state__knights">
-          </div>
-        </div> -->
       </section>
     </div>
   </div>
@@ -82,6 +78,7 @@
         </div>
         <div class="battlefield__audience__data">
           <ul class="hype-meter">
+            <li>0</li>
             <li>1</li>
             <li>2</li>
             <li>3</li>
@@ -104,9 +101,6 @@
       </div>
       <div class="battlefield__cards">
         <div class="battlefield__cards__wrapper">
-          <div class="battlefield__cards__attack card"><h3 class="card__value">0</h3></div>
-          <div class="battlefield__cards__slot visible"></div>
-          <div class="battlefield__cards__committed"></div>
         </div>
         <div class="battlefield__cards__controls">
           <button onclick="takeBack()">Take back</button>
@@ -118,6 +112,20 @@
         <button class="tournament__hand__refill" onclick="refillHand()">Refill Hand</button>
       </div>
     </div>
+    <ul class="suit-legend">
+      <li class="suit-color suitcolor--ag">
+        Draw 1 card
+      </li>
+      <li class="suit-color suitcolor--sa">
+        Increase margin by 1 in the next round
+      </li>
+      <li class="suit-color suitcolor--gu">
+        Gain +2 hype
+      </li>
+      <li class="suit-color suitcolor--pu">
+        Gain +1 excitement if you earned any excitement this round
+      </li>
+    </ul>
   </div>
 </body>
 
