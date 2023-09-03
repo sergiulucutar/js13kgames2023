@@ -1,0 +1,114 @@
+.card {
+  position: relative;
+
+  display: grid;
+  grid-template-rows: 20% 80%;
+  grid-template-columns: 40px 1fr 40px;
+  align-items: center;
+
+  height: 200px;
+  width: 225px;
+
+  border-radius: 10px;
+
+  background-color: #F8F7F2;
+  overflow: hidden;
+  transition: transform 0.4s var(--ease-out);
+}
+
+.card__component {
+  color: white;
+  pointer-events: none;
+}
+
+.card__component:nth-child(1), .card__component:nth-child(4) {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.card__component:nth-child(1) {
+  grid-column: 1;
+  grid-row: 1 / -1;
+
+  transform: translateX(-50%);
+}
+
+.card__component:nth-child(2) {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.card__component:nth-child(3) {
+  grid-column: 2;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+
+  color: black;
+  text-align: center;
+}
+
+.card__component:nth-child(3) h4 {
+  margin: 0;
+}
+
+.card__component:nth-child(4) {
+  grid-column: 3;
+  grid-row: 1 / -1;
+
+  transform: translateX(50%);
+}
+
+.card__component--ar {
+  background-color: white;
+  color: black;
+}
+
+.card__component--sa {
+  background-color: black;
+}
+
+.card__component--gu {
+  background-color: #da3833;
+}
+
+.card__component--pu {
+  background-color: #7b4b97;
+}
+
+.card > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card__word, .card__component--ar em {
+  color: black;
+}
+
+.card__slot {
+  position: relative;
+  height: 200px;
+  width: 225px;
+  margin: 4px;
+
+  background-color: #E3DFCA;
+  border-radius: 10px;
+}
+
+.card__slot:nth-child(5)::before {
+  content: '+1 hype';
+}
+
+.card__slot:nth-child(6)::before {
+  content: '+2 hype';
+}
+
+.tournament__hand .card {
+  margin: 4px;
+}
+
+.tournament__hand .card:hover {
+  transform: translateY(-20%);
+}

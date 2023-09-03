@@ -1,0 +1,136 @@
+.battlefield__audience {
+  position: relative;
+}
+
+.battlefield__audience canvas {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  /* z-index: -1; */
+}
+
+.audience__emoji {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.emoji {
+  position: absolute;
+  border-radius: 20px;
+  padding: 4px;
+  background-color: white;
+  font-size: 2rem;
+}
+
+.battlefield__audience__data {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  z-index: 5;
+}
+
+.battlefield__audience__meter {
+  padding: 4px;
+  margin: 10px;
+  font-size: 3rem;
+  font-weight: bold;
+  background-color: white;
+}
+
+.battlefield__audience__excitement {
+  padding: 4px;
+  margin: 10px;
+  font-size: 3rem;
+  font-weight: bold;
+  background-color: white;
+}
+
+.hype-meter {
+  position: relative;
+  display: flex;
+  height: 60px;
+
+  overflow: hidden;
+}
+
+.hype-meter li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100px;
+  height: 40px;
+  padding: 10px;
+
+  color: black;
+  background-color: white;
+}
+
+.hype-meter li:not(:first-child) {
+  border-left: 1px solid black;
+}
+
+.hype-meter__marker__audience {
+  position: absolute;
+  top: 40px;
+
+  transition: transform 0.4s var(--ease-out);
+}
+
+.hype-meter__marker__audience div {
+  width: 300px;
+  height: 15px;
+  background-color: #CA3C25;
+  border: 3px solid white;
+
+  transform: translateX(calc(-50% + 50px));
+}
+
+.hype-meter__marker__preview {
+  position: absolute;
+  top: 10px;
+  width: 100%;
+  height: 20px;
+
+  background-color: #859277;
+  transform: translateX(-100%);
+  transition: transform 0.4s var(--ease-out);
+}
+
+.audience__percentages {
+  display: flex;
+  background-color: white;
+  padding: 4px 8px;
+  width: 500px;
+}
+
+.audience__percentage {
+  text-align: center;
+  background-color: var(--c_background);
+  color: black;
+}
+
+.audience__percentage--ar {
+  background-color: white;
+}
+
+.audience__percentage--sa {
+  background-color: black;
+  color: white;
+}
+
+.audience__percentage--gu {
+  background-color: #da3833;
+  color: white;
+}
+
+.audience__percentage--pu {
+  background-color: #7b4b97;
+  color: white;
+}
