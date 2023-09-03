@@ -21,12 +21,12 @@
   <div class="screen screen--visible">
     <div class="screen--heraldry">
       <section class="heraldry--left">
-        <div class="event">
+        <div class="event event--prev">
           <div class="event__flavor"></div>
           <header class="event__ribbon">
             <div class="event__name">
               <strong class="event__year">1251</strong>
-              <h1>The 12 Kings Feast</h1>
+              <h1></h1>
             </div>
           </header>
           <div class="event__subtitle">
@@ -36,8 +36,25 @@
             <ul>
             </ul>
           </div>
+          <button class="next-battle__button" onclick="nextEvent()">Next event ></button>
         </div>
-        <button class="host-battle__button">Host Battle</button>
+        <div class="event">
+          <div class="event__flavor"></div>
+          <header class="event__ribbon">
+            <div class="event__name">
+              <strong class="event__year">1251</strong>
+              <h1></h1>
+            </div>
+          </header>
+          <div class="event__subtitle">
+            <em></em>
+          </div>
+          <div class="event__tournament">
+            <ul>
+            </ul>
+          </div>
+          <button class="host-battle__button">Host Battle</button>
+        </div>
       </section>
       <section class="heraldry--right">
         <div class="reputation">
@@ -48,22 +65,33 @@
           </div>
           <div class="reputation__level">1</div>
         </div>
-        <div class="abilities">
+        <div class="mechanics">
           <ul>
-            <li class="ability ability--unlocked">
+            <li class="mechanic">Level 3</li>
+            <li class="mechanic">Level 5</li>
+            <li class="mechanic">Level 8</li>
+          </ul>
+        </div>
+        <div class="abilities">
+          <div>
+            Available ability points: <span id="available-ability-points"></span>
+          </div>
+          <ul>
+            <li class="ability" onclick="unlockAbility(0, event)">
               <div class="ability__checkmark"></div>
+              <span>Gain a card that has 2 wild connections</span>
             </li>
-            <li class="ability">
+            <li class="ability" onclick="unlockAbility(1, event)">
               <div class="ability__checkmark"></div>
+              <span>Gain a card that adds a new slot to the right</span>
             </li>
-            <li class="ability">
+            <li class="ability" onclick="unlockAbility(2, event)">
               <div class="ability__checkmark"></div>
+              <span>Gain a card that increases the margin window by 2 more for this round</span>
             </li>
-            <li class="ability">
+            <li class="ability" onclick="unlockAbility(3, event)">
               <div class="ability__checkmark"></div>
-            </li>
-            <li class="ability">
-              <div class="ability__checkmark"></div>
+              <span>Gain a card that converts 1 excitement in X hype (X based on position)</span>
             </li>
           </ul>
         </div>
@@ -95,9 +123,29 @@
           <h4 class="battlefield__audience__excitement">
             &#128513; <span>0</span>
           </h4>
+          <ul class="audience__percentages">
+            <li class="audience__percentage audience__percentage--mix">2</li>
+            <li class="audience__percentage audience__percentage--gu">1</li>
+            <li class="audience__percentage audience__percentage--ar">5</li>
+            <li class="audience__percentage audience__percentage--sa">3</li>
+            <li class="audience__percentage audience__percentage--pu">1</li>
+          </ul>
         </div>
       </div>
       <div class="battlefield__knights">
+        <div class="battle__knight__stats">
+          <ul>
+            <li>Health: <span class="battle__knight__health">20</span></li>
+            <li>Attacks: <span class="battle__knight__attacks">5</span></li>
+          </ul>
+        </div>
+        <div class="battle__ring"></div>
+        <div class="battle__knight__stats">
+          <ul>
+            <li>Health: <span class="battle__knight__health">20</span></li>
+            <li>Attacks: <span class="battle__knight__attacks">5</span></li>
+          </ul>
+        </div>
       </div>
       <div class="battlefield__cards">
         <div class="battlefield__cards__wrapper">
@@ -112,20 +160,6 @@
         <button class="tournament__hand__refill" onclick="refillHand()">Refill Hand</button>
       </div>
     </div>
-    <ul class="suit-legend">
-      <li class="suit-color suitcolor--ag">
-        Draw 1 card
-      </li>
-      <li class="suit-color suitcolor--sa">
-        Increase margin by 1 in the next round
-      </li>
-      <li class="suit-color suitcolor--gu">
-        Gain +2 hype
-      </li>
-      <li class="suit-color suitcolor--pu">
-        Gain +1 excitement if you earned any excitement this round
-      </li>
-    </ul>
   </div>
 </body>
 

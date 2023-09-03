@@ -5,6 +5,7 @@ class State {
       earned: 0,
       required: 3
     };
+    this.availableAbilityPoints = 1;
 
     this.knights = [
       {
@@ -140,6 +141,7 @@ class State {
         }
       }
     ];
+
     this.selectedKnights = [
       {
         name: 'Marllow of WhiteCastle',
@@ -162,7 +164,9 @@ class State {
           perPile: [],
           perCross: []
         },
-        colors: [4, 6]
+        colors: [4, 6],
+        health: 20,
+        attacksCount: 0
       },
       {
         name: 'John of East Marshes',
@@ -185,7 +189,9 @@ class State {
           perPile: [],
           perCross: []
         },
-        colors: [2, 3, 4]
+        colors: [2, 3, 4],
+        health: 20,
+        attacksCount: 0
       }
     ];
 
@@ -217,6 +223,24 @@ class State {
     ];
 
     this.defaultDeck = this._generateDefaultDeck();
+    this.abilities = [];
+    this.mechanics = [
+      {
+        levelRequired: 3,
+        isUnlocked: false,
+        text: 'Present the Winner phase, play all cards in hand'
+      },
+      {
+        levelRequired: 5,
+        isUnlocked: false,
+        text: 'Present the competitors phase, where you...'
+      },
+      {
+        levelRequired: 8,
+        isUnlocked: false,
+        text: 'Keen eye. Be able to react to small reactions that the fighter engage in'
+      }
+    ];
   }
 
   selectKnight(knight) {
@@ -227,17 +251,43 @@ class State {
     this.reputation.earned += amount;
 
     if (this.reputation.earned >= this.reputation.required) {
-      this.level += 1;
-      this.reputation.required = this._getReputationRequired(this.level);
-      this.reputation.earned -= this.reputation.required;
-      this.reputation.earned = Math.max(0, this.reputation.earned);
+      while (this.reputation.earned >= this.reputation.required) {
+        this.level += 1;
+        this.enableMechanics();
+        this.reputation.required = this._getReputationRequired(this.level);
+        this.reputation.earned -= this.reputation.required;
+        this.reputation.earned = Math.max(0, this.reputation.earned);
+      }
     } else if (this.reputation.earned < 0) {
       this.level -= 1;
       this.level = Math.max(1, this.level);
       this.reputation.required = this._getReputationRequired(this.level);
       this.reputation.earned += this.reputation.required;
     }
+
+    this.availableAbilityPoints = this.level;
   }
+
+  enableMechanics() {
+    if (this.level >= 3) {
+      this.mechanics[0].isUnlocked = true;
+    }
+
+    if (this.level >= 5) {
+      this.mechanics[1].isUnlocked = true;
+    }
+
+    if (this.level >= 8) {
+      this.mechanics[2].isUnlocked = true;
+    }
+  }
+
+  unlockAbility(index) {
+    this.abilities.push(index);
+    this.availableAbilityPoints -= 1;
+  }
+
+  /* Private */
 
   _getReputationRequired(level) {
     let a = 1,

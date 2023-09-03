@@ -1,8 +1,5 @@
 
 .screen--heraldry {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-
   width: 100%;
   height: 100%;
 }
@@ -10,12 +7,20 @@
 .heraldry--left {
   position: relative;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 100%;
+  height: 100%;
+
+  overflow: hidden;
+  transition: transform 1s var(--ease-out);
 }
 
 .heraldry--right {
-  position: relative;
+  position: absolute;
+  width: 50vw;
+  height: 100%;
+  right: 0;
+  top: 0;
+
   display: flex;
   flex-direction: column;
   background-color: var(--c_primary);  
@@ -68,7 +73,7 @@
   background-color: #C9D0C8;
 }
 
-.host-battle__button {
+.next-battle__button, .host-battle__button {
   position: absolute;
   bottom: 50px;
   left: 50%;
@@ -76,9 +81,13 @@
 }
 
 .event {
-  position: absolute;
-  width: 100%;
+  position: relative;
+  width: 50%;
   height: 100%;
+}
+
+.event--prev {
+  display: none;
 }
 
 .event__flavor {
@@ -168,128 +177,4 @@
 
 .event__tournament li span {
   grid-column: 2 / -1;
-}
-
-.reputation {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  margin-top: 10%;
-}
-
-.reputation__track {
-  grid-column: 1 / span 3;
-
-  position: relative;
-  height: 40px;
-  margin: 0 40px;
-  border-radius: 5px;
-  padding: 4px 0;
-
-  border: 2px solid var(--c_ternary);
-  overflow: hidden;
-}
-
-.reputation__track__meter {
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-
-  background-color: var(--c_ternary);
-  transition: transform 0.2s var(--ease-out);
-}
-
-.reputation__track ul {
-  display: flex;
-  height: 100%;
-
-  /* background-color: var(--c_primary_v); */
-}
-
-.reputation__track__step {
-  height: 100%;
-  flex: 1 1 auto;
-}
-
-.reputation__track__step:not(:last-child) {
-  border-right: 1px solid var(--c_ternary);
-}
-
-.reputation__level {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  width: 160px;
-  height: 160px;
-
-  border: 5px dashed var(--c_ternary);
-  border-radius: 50%;
-
-  background-color: var(--c_primary_v);
-  color: var(--c_background);
-  font-family: Garamond, serif;
-  font-size: 5rem;
-
-  transform: translateY(-50%);
-}
-
-.reputation__level::after {
-  content: '';
-  position: absolute;
-  width: 200px;
-  height: 200px;
-
-  border: 2px solid var(--c_ternary);
-  border-radius: 50%;
-}
-
-.abilities {
-  padding: 20px;
-}
-
-.abilities ul {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 10px;
-}
-
-.ability {
-  height: 200px;
-  padding: 10px;
-
-  border-radius: 10px;
-  border: 2px solid var(--c_ternary);
-
-  flex: 1 1 auto;
-}
-
-.ability--unlocked {
-  background-color: var(--c_primary_v);
-}
-
-.ability__checkmark {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-}
-
-.ability__checkmark::after {
-  content: '';
-  position: absolute;
-  width: 120%;
-  height: 120%;
-
-  border-radius: 50%;
-  border: 1px solid var(--c_ternary);
-}
-
-.ability--unlocked .ability__checkmark {
-  background-color: var(--c_ternary);
 }

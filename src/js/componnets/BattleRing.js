@@ -1,20 +1,20 @@
 class BattleRing {
   constructor(state) {
     this.state = state;
-    this.knightsEl = document.querySelector('.battlefield__knights');
+    this.knightsEl = document.querySelector('.battle__ring');
     this.knightIdleStepDistance = 20;
     this.isAttacking = false;
   }
 
   init(attackingKnightIndex, attacksCountPerKnight) {
     this.knightsEl.innerHTML = '';
+    this.state.selectedKnights.forEach(knight => {
+      knight.health = 20;
+      knight.attacks = attacksCountPerKnight;
+    });
 
     this.selectedKnights = this.state.selectedKnights.map(knight => {
       const divEl = getKnightRendering(knight);
-      const attackCount = document.createElement('span');
-      attackCount.classList.add('state__knight__attacks');
-      attackCount.textContent = attacksCountPerKnight;
-      divEl.appendChild(attackCount);
       this.knightsEl.appendChild(divEl);
 
       return {
@@ -49,16 +49,7 @@ class BattleRing {
     this.isAttacking = false;
     if (this.knightsEl.children[this.attackingKnightIndex]) {
       this.knightsEl.children[this.attackingKnightIndex].style.left = '0px';
-      this.updateKnightAttackCount(
-        this.knightsEl.children[this.attackingKnightIndex]
-      );
     }
-  }
-
-  updateKnightAttackCount(knight) {
-    const attacksEl = knight.querySelector('.state__knight__attacks');
-    const attacks = parseInt(attacksEl.textContent);
-    attacksEl.textContent = attacks - 1;
   }
 
   isCloseEnough() {

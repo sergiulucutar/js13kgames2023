@@ -133,7 +133,6 @@ class Herardly {
     this.gameEvents = new GameEvents(state);
     this.gameEvents.init();
 
-    this.gameEvents.render();
     this._renderLevel();
     this._renderReputationTrack();
   }
@@ -154,9 +153,33 @@ class Herardly {
     });
   }
 
+  nextEvent() {
+    this.gameEvents.next();
+  }
+
   render() {
     this._renderLevel();
     this._renderReputationTrack();
+    this._renderAbilityPoints();
+    this._renderMechanics();
+    this.gameEvents.render();
+  }
+
+  _renderAbilityPoints() {
+    const element = document.querySelector('#available-ability-points');
+    element.textContent = this.state.availableAbilityPoints;
+  }
+
+  _renderMechanics() {
+    this.state.mechanics.forEach((mechanic, index) => {
+      if (mechanic.isUnlocked) {
+        const element = document.querySelector(
+          `.mechanic:nth-child(${index + 1})`
+        );
+        element.textContent = mechanic.text;
+        element.classList.add('mechanic--unlocked');
+      }
+    });
   }
 
   _renderSelectedKnight(knight, index) {
@@ -187,7 +210,6 @@ class Herardly {
       reputationTrackEl.getBoundingClientRect().width /
       this.state.reputation.required;
 
-    debugger;
     reputationTrackMeterEl.style.transform = `translateX(${
       reputationTrackSegment * this.state.reputation.earned
     }px)`;

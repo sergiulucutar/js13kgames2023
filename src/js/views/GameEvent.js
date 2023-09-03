@@ -2,6 +2,9 @@ class GameEvents {
   constructor(state) {
     this.state = state;
 
+    this.eventScreen = document.querySelector('.heraldry--left');
+    this.prevEventEl = document.querySelector('.event--prev');
+    this.currentEventEventEl = document.querySelector('.event:last-child');
     this.titleEl = document.querySelector('.event__name h1');
     this.subtitleEl = document.querySelector('.event__subtitle em');
     this.battlesEl = document.querySelector('.event__tournament');
@@ -9,14 +12,33 @@ class GameEvents {
 
   init() {
     this.currentEvent = this._chooseRandomEvent();
+
+    window.nextEvent = () =>
+      (this.eventScreen.style.transform = `translateX(-50%)`);
+  }
+
+  next() {
+    this.prevEventEl.style.display = 'block';
+    this.prevEvent = this.currentEvent;
+    this.currentEvent = this._chooseRandomEvent();
   }
 
   render() {
-    this.titleEl.textContent = this.currentEvent.name;
-    this.subtitleEl.textContent = this.currentEvent.subtitle;
+    if (this.prevEvent) {
+      this._renderEvent(this.prevEvent, this.prevEventEl);
+    }
+    this._renderEvent(this.currentEvent, this.currentEventEventEl);
+  }
+
+  _renderEvent(event, element) {
+    const titleEl = element.querySelector('.event__name h1');
+    const subtitleEl = element.querySelector('.event__subtitle em');
+    const battlesEl = element.querySelector('.event__tournament');
+    titleEl.textContent = event.name;
+    subtitleEl.textContent = event.subtitle;
 
     let html = '';
-    this.currentEvent.battles.forEach(battle => {
+    event.battles.forEach(battle => {
       switch (battle) {
         case 1:
           html += '<li>Melee Combat</li>';
@@ -29,7 +51,7 @@ class GameEvents {
           break;
       }
     });
-    this.battlesEl.innerHTML = html;
+    battlesEl.innerHTML = html;
   }
 
   _chooseRandomEvent() {

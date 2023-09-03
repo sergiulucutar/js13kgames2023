@@ -45,7 +45,16 @@ window.onload = () => {
     heraldryScreen.classList.add('screen--visible');
     tournamentScreen.classList.remove('screen--visible');
     state.addEarnedReputation(data.generatedExcitement);
+    heraldry.nextEvent();
     heraldry.render();
+  };
+
+  window.unlockAbility = (index, event) => {
+    if (state.availableAbilityPoints) {
+      state.unlockAbility(index);
+      event.currentTarget.classList.add('ability--unlocked');
+      heraldry._renderAbilityPoints();
+    }
   };
 
   document
@@ -56,4 +65,6 @@ window.onload = () => {
 
       tournament.initBattle();
     });
+
+  heraldry.render();
 };

@@ -62,8 +62,19 @@
 }
 
 .battlefield__knights {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+}
+
+.battle__knight__stats {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
+  align-items: center;
+}
+
+.battle__ring {
+  display: flex;
+  justify-content: space-between;
 }
 
 .battlefield__knights .state__knight {
@@ -223,10 +234,6 @@
   background-color: #7b4b97;
 }
 
-.card--flip {
-  background-color: #859277;
-}
-
 .card__word {
   width: 100px;
 
@@ -339,42 +346,34 @@
   transition: transform 0.4s var(--ease-out);
 }
 
-.suit-legend {
-  position: absolute;
-  top: 50%;
-  right: 50px;
-
-  width: 200px;
+.audience__percentages {
+  display: flex;
+  background-color: white;
+  padding: 4px 8px;
+  width: 500px;
 }
 
-.suit-legend li {
-  position: relative;
+.audience__percentage {
+  text-align: center;
+  background-color: var(--c_background);
+  color: black;
 }
 
-.suit-legend li::before {
-  content: '';
-  position: absolute;
-  top: 5px;
-  left: -30px;
-
-  width: 20px;
-  height: 20px;
-
-  border-radius: 50%;
-}
-
-.suit-legend li.suitcolor--ag::before {
+.audience__percentage--ar {
   background-color: white;
 }
 
-.suit-legend li.suitcolor--sa::before {
+.audience__percentage--sa {
   background-color: black;
+  color: white;
 }
 
-.suit-legend li.suitcolor--gu::before {
+.audience__percentage--gu {
   background-color: #da3833;
+  color: white;
 }
 
-.suit-legend li.suitcolor--pu::before {
+.audience__percentage--pu {
   background-color: #7b4b97;
+  color: white;
 }

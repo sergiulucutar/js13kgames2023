@@ -5,7 +5,13 @@ class BattleMelee {
     this.audience = {
       meter: 0,
       excitement: 0,
-      margin: 1
+      margin: 1,
+      percentage: {
+        faith: Math.round((Math.random() * 0.15 + 0.1) * 10),
+        cunning: Math.round((Math.random() * 0.15 + 0.1) * 10),
+        strength: Math.round((Math.random() * 0.15 + 0.1) * 10),
+        noblesse: Math.round((Math.random() * 0.15 + 0.1) * 10)
+      }
     };
 
     this.attackCard = '';
@@ -44,6 +50,8 @@ class BattleMelee {
     this.hand.render();
     this._renderAudience();
     this._renderAudienceHypePreview();
+    this._renderAudiencePercentages();
+    this._renderKnightsStats();
 
     this._registerEvents();
   }
@@ -74,18 +82,7 @@ class BattleMelee {
           break;
         default:
       }
-
-      // Add suit power if it's completed and gives hype
-      if (index < this.committedCards.length - 1) {
-        if (
-          card.meta.isRightActive &&
-          card.colorRight === COLORS_PREFIX.gules
-        ) {
-          sum += 2;
-        }
-      }
     });
-    console.log('SUM ', sum);
     return sum;
   }
 
@@ -106,7 +103,10 @@ class BattleMelee {
     this.committedCards = [];
     this.strikesCount++;
 
-    if (this.strikesCount >= 8) {
+    if (
+      this.strikesCount >= 8 ||
+      this.state.selectedKnights.every(knight => knight.health <= 0)
+    ) {
       onBattleEnded({
         generatedExcitement: this.audience.excitement
       });
@@ -149,6 +149,30 @@ class BattleMelee {
     this.commitCards();
   }
 
+  getGeneratedCheersTotal(difference) {
+    let total = difference * this.audience.percentage.mix;
+    for (let i = 0; i < this.committedCards.length - 1; i++) {
+      if (this.committedCards[i].meta.isRightActive) {
+        switch (this.committedCards[i].colorRight) {
+          case COLORS_PREFIX.argent:
+            total += difference * this.audience.percentage.faith;
+            break;
+          case COLORS_PREFIX.gules:
+            total += difference * this.audience.percentage.strength;
+            break;
+          case COLORS_PREFIX.purpur:
+            total += difference * this.audience.percentage.noblesse;
+            break;
+          case COLORS_PREFIX.sable:
+            total += difference * this.audience.percentage.cunning;
+            break;
+        }
+      }
+    }
+    console.log('total ', total);
+    return total;
+  }
+
   resolveAttack() {
     const { audience } = this;
     let committedValue = this.getCommittedCardsTotal();
@@ -160,14 +184,28 @@ class BattleMelee {
     if (Math.abs(hypeDifference) > audience.margin) {
       generatedExcitement =
         hypeDifference - this.audience.margin * Math.sign(hypeDifference);
-      audience.excitement += generatedExcitement;
+      console.log(
+        'Generated excitement ',
+        generatedExcitement,
+        ' Total ',
+        this.getGeneratedCheersTotal(generatedExcitement)
+      );
+      audience.excitement += this.getGeneratedCheersTotal(generatedExcitement);
     }
 
     audience.meter = Math.max(0, committedValue);
     this._resolveSelectedCardPower(hypeDifference, generatedExcitement);
+
+    const defendingKnight =
+      this.state.selectedKnights[+!this.attackingKnightIndex];
+    defendingKnight.health -= this.attackCard;
+    this.state.selectedKnights[this.attackingKnightIndex].attacks -= 1;
+    defendingKnight.health = Math.max(defendingKnight.health, 0);
+
     this.hand.render();
     this._renderAudience();
     this.battleRing.attackResolved();
+    this._renderKnightsStats();
   }
 
   _resolveSelectedCardPower(generatedHype, generatedExcitement) {
@@ -272,6 +310,26 @@ class BattleMelee {
     }px)`;
   }
 
+  _renderKnightsStats() {
+    let knightStatsLeft = document.querySelector(
+      '.battle__knight__stats:first-child'
+    );
+    let healthEl = knightStatsLeft.querySelector('.battle__knight__health');
+    let attacksEl = knightStatsLeft.querySelector('.battle__knight__attacks');
+
+    healthEl.textContent = this.state.selectedKnights[0].health;
+    attacksEl.textContent = this.state.selectedKnights[0].attacks;
+
+    knightStatsLeft = document.querySelector(
+      '.battle__knight__stats:last-child'
+    );
+    healthEl = knightStatsLeft.querySelector('.battle__knight__health');
+    attacksEl = knightStatsLeft.querySelector('.battle__knight__attacks');
+
+    healthEl.textContent = this.state.selectedKnights[1].health;
+    attacksEl.textContent = this.state.selectedKnights[1].attacks;
+  }
+
   _renderLastPickedCard() {
     const index = this.committedCards.length - 1;
     const pickedCard = this.committedCards[index];
@@ -287,6 +345,35 @@ class BattleMelee {
       html += '<div class="card__slot"></div>';
     }
     this.cardsEl.innerHTML = html;
+  }
+
+  _renderAudiencePercentages() {
+    this.audience.percentage.mix =
+      10 -
+      this.audience.percentage.strength -
+      this.audience.percentage.faith -
+      this.audience.percentage.cunning -
+      this.audience.percentage.noblesse;
+
+    let element = document.querySelector('.audience__percentage--gu');
+    element.style.width = `${this.audience.percentage.strength * 10}%`;
+    element.textContent = this.audience.percentage.strength;
+
+    element = document.querySelector('.audience__percentage--ar');
+    element.style.width = `${this.audience.percentage.faith * 10}%`;
+    element.textContent = this.audience.percentage.faith;
+
+    element = document.querySelector('.audience__percentage--sa');
+    element.style.width = `${this.audience.percentage.cunning * 10}%`;
+    element.textContent = this.audience.percentage.cunning;
+
+    element = document.querySelector('.audience__percentage--pu');
+    element.style.width = `${this.audience.percentage.noblesse * 10}%`;
+    element.textContent = this.audience.percentage.noblesse;
+
+    element = document.querySelector('.audience__percentage--mix');
+    element.style.width = `${this.audience.percentage.mix * 10}%`;
+    element.textContent = this.audience.percentage.mix;
   }
 
   _registerEvents() {
