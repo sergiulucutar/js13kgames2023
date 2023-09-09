@@ -315,10 +315,28 @@ class State {
         value: random(0, 4),
         colorLeft: randomColor1,
         colorRight: randomColor2,
-        powerIndex: randomPower
+        powerIndex: randomPower,
+        word: this._getCardWord()
       });
     }
 
     return deck;
+  }
+
+  _getCardWord() {
+    const words = [
+      'powerful',
+      'strong',
+      'elegant',
+      'precise',
+      'sharp',
+      'mighty',
+      'fast',
+      'calculated',
+      'cunning'
+    ];
+
+    const randomIndex = random(0, words.length);
+    return words[randomIndex];
   }
 }

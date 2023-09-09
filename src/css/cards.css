@@ -13,12 +13,13 @@
 
   background-color: #F8F7F2;
   overflow: hidden;
-  transition: transform 0.4s var(--ease-out);
+  transition: border-radius 0.4s var(--ease-out), transform 0.4s var(--ease-out);
 }
 
 .card__component {
   color: white;
   pointer-events: none;
+  transition: opacity 0.2s var(--ease-out);
 }
 
 .card__component:nth-child(1), .card__component:nth-child(4) {

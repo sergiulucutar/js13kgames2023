@@ -6,7 +6,7 @@ class CardRenderer {
     cardEl.innerHTML = `
       <div class="card__component card__component--${card.colorLeft}"></div>
       <div class="card__component">
-        <em class="card__word">"${this._getCardWord()}"</em>
+        <em class="card__word">"${card.word}"</em>
       </div>
       <div class="card__component">
         <h4>${card.value}</h4>
@@ -19,23 +19,6 @@ class CardRenderer {
 
   _getCardPowerText(powerIndex) {
     return cardPowerText[powerIndex].power;
-  }
-
-  _getCardWord() {
-    const words = [
-      'powerful',
-      'strong',
-      'elegant',
-      'precise',
-      'sharp',
-      'mighty',
-      'fast',
-      'calculated',
-      'cunning'
-    ];
-
-    const randomIndex = random(0, words.length);
-    return words[randomIndex];
   }
 }
 

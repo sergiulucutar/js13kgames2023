@@ -17,11 +17,10 @@ class BattleMelee {
 
     this.hand = new Hand(state);
 
+    this.messageRenderer = new MessageRenderer();
+
     /* DOM ELEMENTS */
     this.cardsEl = document.querySelector('.battlefield__cards__wrapper');
-    this.battlefieldCards = document.querySelector(
-      '.battlefield__cards__committed'
-    );
     this.slotCardEl = document.querySelector('.battlefield__cards__slot');
 
     this._generateAttackValue();
@@ -39,12 +38,15 @@ class BattleMelee {
   }
 
   commitCards() {
+    this.cardsEl.parentNode.classList.add('battlefield__cards--committed');
+    this._animateMessage();
     this._resolveAttack();
     this.audienceCanvas.addExcitement(random(1, 8));
 
     setTimeout(() => {
       this.nextBattleStep();
-    }, 1000);
+      this.cardsEl.parentNode.classList.remove('battlefield__cards--committed');
+    }, 2000);
   }
 
   nextBattleStep() {
@@ -247,6 +249,24 @@ class BattleMelee {
   }
 
   /* Renders */
+
+  _animateMessage() {
+    const cards = document.querySelectorAll(
+      '.battlefield__cards__wrapper .card'
+    );
+    const destination = {
+      x: window.innerWidth / 2,
+      y: window.innerHeight / 2
+    };
+    cards.forEach(card => {
+      card.style.transform = `translate(${
+        destination.x - card.getBoundingClientRect().x - 114
+      }px, ${
+        destination.y - card.getBoundingClientRect().y - 100
+      }px) scale(0.01)`;
+    });
+    this.messageRenderer.animate(this.committedCards);
+  }
 
   _renderLastPickedCard() {
     const index = this.committedCards.length - 1;
