@@ -312,11 +312,10 @@ class State {
       const randomPower = random(0, cardPowerText.length);
 
       deck.push({
-        value: random(0, 4),
+        value: 2,
         colorLeft: randomColor1,
         colorRight: randomColor2,
-        powerIndex: randomPower,
-        word: this._getCardWord()
+        powerIndex: randomPower
       });
     }
 

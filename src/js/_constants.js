@@ -1,27 +1,79 @@
 var cardPowerText = [
   {
-    power: 'Draw 1 if you generate 3 or more hype'
+    word: 'unrelenting',
+    power: `Adjacent cards value are equal to this cards value`
   },
   {
-    power: 'If you generate excitement, generate 1 more'
+    word: 'thunderous',
+    power: 'Gain excitement equal to half my value.'
   },
   {
-    power: 'If this is in position 1, gain 1 hype'
+    word: 'powerful',
+    power: '<strong>(3)</strong>: +3 hype'
   },
   {
-    power: '+2 hype if this is the only card committed'
+    word: 'devastating',
+    power: 'Double the hype if this is the only committed card'
   },
   {
-    power: 'If this is in the last position, draw 1 card'
+    word: 'ruthless',
+    power: '<strong>(5): Adjacent cards have +2 value'
   },
   {
-    power: '+X hype, where X is the position of the card slot'
+    word: 'cataclysmic',
+    power: '<strong>(8)</strong>: Draw 2 cards and gain 2 excitement'
   },
-  // {
-  //   power: 'Next round, lose 0 excitement if this is placed last'
-  // }
   {
-    power: '+2 excitement if both components of this card are active'
+    word: 'calculated',
+    power: 'If value is less or equal to 2, draw 1 card and gain 1 excitement'
+  },
+  {
+    word: 'strategic',
+    power: 'Add card positions number to the value of the card'
+  },
+  {
+    word: 'prudent',
+    power: "Prevent excitement from being lost equal to this card's value"
+  },
+  {
+    word: 'deliberate',
+    power:
+      'If this is the first or last card, draw X cards and gain X excitement equal to half the value'
+  },
+  {
+    word: 'reflective',
+    power: "Gain hype equal to this card's position - this card's value"
+  },
+  {
+    word: 'sagacious',
+    power:
+      "If value - position < 0, draw X cards, else gain X excitement, where X is this card's value"
+  },
+  {
+    word: 'graceful',
+    power: '+3 value if this has 2 adjacent committed cards'
+  },
+  {
+    word: 'chivalrous',
+    power:
+      "You cannot gain or lose excitement unless hype exceeds this card's value"
+  },
+  {
+    word: 'refined',
+    power: 'Gain excitement based on this card value - this card position'
+  },
+  {
+    word: 'gallant',
+    power:
+      'Prevent X excitement from being lost, where X is the position of teh card'
+  },
+  {
+    word: 'majestic',
+    power: 'Draw a card for each excitement earned this round'
+  },
+  {
+    word: 'exquisite',
+    power: '+X value, where x is half of gained excitement rounded down'
   }
 ];
 

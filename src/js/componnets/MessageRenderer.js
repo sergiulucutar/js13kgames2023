@@ -14,7 +14,8 @@ class MessageRenderer {
 
   _getMessage(cards) {
     return cards.reduce((text, card) => {
-      text += `${card.word} `;
+      const { word } = cardPowerText[card.powerIndex];
+      text += `${word} `;
       return text;
     }, '');
   }

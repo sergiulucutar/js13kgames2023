@@ -16,6 +16,16 @@ class Hand {
     this.discardPile.push(card);
   }
 
+  adjustCardValues(committedCards) {
+    this.cards.forEach(card => {
+      if (committedCards.find(c => c.powerIndex === card.powerIndex)) {
+        card.value = 0;
+      } else {
+        card.value += 1;
+      }
+    });
+  }
+
   pickCard(cardIndex) {
     const card = this.cards[cardIndex];
     this.cards.splice(cardIndex, 1);

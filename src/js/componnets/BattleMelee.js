@@ -123,7 +123,6 @@ class BattleMelee {
   // }
 
   /* Private */
-
   _generateAttackValue() {
     this.attackValue = random(2, 6);
   }
@@ -217,6 +216,7 @@ class BattleMelee {
     this.audience.renderMeters();
     this.battleRing.attackResolved();
     this.knightsStats.render();
+    this.hand.adjustCardValues(this.committedCards);
     this.hand.render();
   }
 
