@@ -1,29 +1,9 @@
 
 .screen--heraldry {
+  display: grid;
+  grid-template-rows: 20% auto;
   width: 100%;
   height: 100%;
-}
-
-.heraldry--left {
-  position: relative;
-  display: flex;
-  width: 100%;
-  height: 100%;
-
-  overflow: hidden;
-  transition: transform 1s var(--ease-out);
-}
-
-.heraldry--right {
-  position: absolute;
-  width: 50vw;
-  height: 100%;
-  right: 0;
-  top: 0;
-
-  display: flex;
-  flex-direction: column;
-  background-color: var(--c_primary);  
 }
 
 .state__knights {
@@ -48,8 +28,14 @@
 
 .state__knight__name {
   margin: 0;
+  font-size: 1rem;
   text-align: center;
   pointer-events: none;
+}
+
+.state__knight img {
+  width: 50px !important;
+  height: 50px !important;
 }
 
 .heraldry__state h2 {

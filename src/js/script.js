@@ -33,28 +33,31 @@ window.onload = () => {
   const state = new State();
   const heraldry = new Herardly(state);
   const tournament = new Tournament(state);
-  // heraldry.showState();
 
   window.addEventListener('contextmenu', e => e.preventDefault());
-
-  window.selectKnight = knight => {
-    heraldry.selectKnight(knight);
-  };
 
   window.onBattleEnded = data => {
     heraldryScreen.classList.add('screen--visible');
     tournamentScreen.classList.remove('screen--visible');
+
     state.addEarnedReputation(data.generatedExcitement);
-    heraldry.nextEvent();
-    heraldry.render();
+    heraldry.toggleBattleEndScreen();
+    if (state.showRewards) {
+      heraldry.showRewards();
+    }
+    heraldry.gameEvents.render();
   };
 
-  window.unlockAbility = (index, event) => {
-    if (state.availableAbilityPoints) {
-      state.unlockAbility(index);
-      event.currentTarget.classList.add('ability--unlocked');
-      heraldry._renderAbilityPoints();
-    }
+  window.storyContinue = () => {
+    heraldry.toggleBattleEndScreen();
+  };
+
+  window.nextEvent = () => {
+    heraldry.nextEvent();
+  };
+
+  window.chooseReward = (cardIndex, event) => {
+    heraldry.chooseReward(cardIndex, event);
   };
 
   document
@@ -67,4 +70,6 @@ window.onload = () => {
     });
 
   heraldry.render();
+
+  // onBattleEnded({ generatedExcitement: 10 });
 };

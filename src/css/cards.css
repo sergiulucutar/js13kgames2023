@@ -62,8 +62,7 @@
 }
 
 .card__component--ar {
-  background-color: white;
-  color: black;
+  background-color: #b09f79;
 }
 
 .card__component--sa {
@@ -96,6 +95,8 @@
 
   background-color: #E3DFCA;
   border-radius: 10px;
+
+  transition: opacity 0.2s var(--ease-out), transform 0.2s var(--ease-out);
 }
 
 .card__slot:nth-child(5)::before {
@@ -104,6 +105,46 @@
 
 .card__slot:nth-child(6)::before {
   content: '+2 hype';
+}
+
+.battlefield__cards__wrapper--attack-left .card__slot {
+  opacity: 0;
+  transform: translateX(40%);
+}
+
+.battlefield__cards__wrapper--attack-right .card__slot {
+  opacity: 0;
+  transform: translateX(-40%);
+}
+
+.battlefield__cards__wrapper--attack-delay-left .card__slot:nth-child(1),
+.battlefield__cards__wrapper--attack-delay-right .card__slot:nth-child(6)
+{
+  transition-delay: 0.3s;
+}
+
+.battlefield__cards__wrapper--attack-delay-left .card__slot:nth-child(2),
+.battlefield__cards__wrapper--attack-delay-right .card__slot:nth-child(5)
+{
+  transition-delay: 0.25s;
+}
+
+.battlefield__cards__wrapper--attack-delay-left .card__slot:nth-child(3),
+.battlefield__cards__wrapper--attack-delay-right .card__slot:nth-child(4)
+{
+  transition-delay: 0.2s;
+}
+
+.battlefield__cards__wrapper--attack-delay-left .card__slot:nth-child(4),
+.battlefield__cards__wrapper--attack-delay-right .card__slot:nth-child(3)
+{
+  transition-delay: 0.15s;
+}
+
+.battlefield__cards__wrapper--attack-delay-left .card__slot:nth-child(5),
+.battlefield__cards__wrapper--attack-delay-right .card__slot:nth-child(2)
+{
+  transition-delay: 0.1s;
 }
 
 .tournament__hand .card {

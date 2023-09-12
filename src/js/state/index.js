@@ -5,7 +5,7 @@ class State {
       earned: 0,
       required: 3
     };
-    this.availableAbilityPoints = 1;
+    this.unlockedCards = [0, 1, 2, 3, 4];
 
     this.knights = [
       {
@@ -195,56 +195,12 @@ class State {
       }
     ];
 
-    this.defaultDeck = [
-      'ar1',
-      'ar2',
-      'ar3',
-      'ar4',
-      'ar5',
-      'ar6',
-      'sa1',
-      'sa2',
-      'sa3',
-      'sa4',
-      'ar5',
-      'ar6',
-      'gu1',
-      'gu2',
-      'gu3',
-      'gu4',
-      'gu5',
-      'gu6',
-      'pu1',
-      'pu2',
-      'pu3',
-      'pu4',
-      'pu5',
-      'pu6'
-    ];
-
     this.defaultDeck = this._generateDefaultDeck();
-    this.abilities = [];
-    this.mechanics = [
-      {
-        levelRequired: 3,
-        isUnlocked: false,
-        text: 'Present the Winner phase, play all cards in hand'
-      },
-      {
-        levelRequired: 5,
-        isUnlocked: false,
-        text: 'Present the competitors phase, where you...'
-      },
-      {
-        levelRequired: 8,
-        isUnlocked: false,
-        text: 'Keen eye. Be able to react to small reactions that the fighter engage in'
-      }
-    ];
+    this.showRewards = true;
   }
 
-  selectKnight(knight) {
-    this.selectedKnights.push(knight);
+  addCard(cardIndex) {
+    this.unlockedCards.push(cardIndex);
   }
 
   addEarnedReputation(amount) {
@@ -253,7 +209,7 @@ class State {
     if (this.reputation.earned >= this.reputation.required) {
       while (this.reputation.earned >= this.reputation.required) {
         this.level += 1;
-        this.enableMechanics();
+        this.showRewards = true;
         this.reputation.required = this._getReputationRequired(this.level);
         this.reputation.earned -= this.reputation.required;
         this.reputation.earned = Math.max(0, this.reputation.earned);
@@ -264,27 +220,20 @@ class State {
       this.reputation.required = this._getReputationRequired(this.level);
       this.reputation.earned += this.reputation.required;
     }
-
-    this.availableAbilityPoints = this.level;
   }
 
-  enableMechanics() {
-    if (this.level >= 3) {
-      this.mechanics[0].isUnlocked = true;
+  getRewards() {
+    let availableToUnlock = cardPowerText
+      .map((card, index) => !this.unlockedCards.find(i => i === index) && index)
+      .filter(i => i);
+    const result = [];
+    for (let i = 0; i < 3; i++) {
+      const chosen = availableToUnlock[random(0, availableToUnlock.length)];
+      result.push(chosen);
+      availableToUnlock = availableToUnlock.filter(power => power !== chosen);
     }
 
-    if (this.level >= 5) {
-      this.mechanics[1].isUnlocked = true;
-    }
-
-    if (this.level >= 8) {
-      this.mechanics[2].isUnlocked = true;
-    }
-  }
-
-  unlockAbility(index) {
-    this.abilities.push(index);
-    this.availableAbilityPoints -= 1;
+    return result;
   }
 
   /* Private */
@@ -309,7 +258,8 @@ class State {
     for (let i = 0; i < 20; i++) {
       const randomColor1 = colorEntries[random(0, colorEntries.length)][1];
       const randomColor2 = colorEntries[random(0, colorEntries.length)][1];
-      const randomPower = random(0, cardPowerText.length);
+      const randomPower =
+        this.unlockedCards[random(0, this.unlockedCards.length)];
 
       deck.push({
         value: random(0, 4),

@@ -17,11 +17,18 @@ var cardPowerText = [
   {
     power: '+X hype, where X is the position of the card slot'
   },
-  // {
-  //   power: 'Next round, lose 0 excitement if this is placed last'
-  // }
   {
     power: '+2 excitement if both components of this card are active'
+  },
+  {
+    power: 'the next card you commit has double value'
+  },
+  {
+    power:
+      '+3 if none of the links match, must not be the first of teh last card'
+  },
+  {
+    power: 'Draw 1 for each complete link'
   }
 ];
 

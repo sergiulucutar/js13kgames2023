@@ -20,43 +20,7 @@
 <body oncontextmenu="event => event.preventDefault()">
   <div class="screen screen--visible">
     <div class="screen--heraldry">
-      <section class="heraldry--left">
-        <div class="event event--prev">
-          <div class="event__flavor"></div>
-          <header class="event__ribbon">
-            <div class="event__name">
-              <strong class="event__year">1251</strong>
-              <h1></h1>
-            </div>
-          </header>
-          <div class="event__subtitle">
-            <em></em>
-          </div>
-          <div class="event__tournament">
-            <ul>
-            </ul>
-          </div>
-          <button class="next-battle__button" onclick="nextEvent()">Next event ></button>
-        </div>
-        <div class="event">
-          <div class="event__flavor"></div>
-          <header class="event__ribbon">
-            <div class="event__name">
-              <strong class="event__year">1251</strong>
-              <h1></h1>
-            </div>
-          </header>
-          <div class="event__subtitle">
-            <em></em>
-          </div>
-          <div class="event__tournament">
-            <ul>
-            </ul>
-          </div>
-          <button class="host-battle__button">Host Battle</button>
-        </div>
-      </section>
-      <section class="heraldry--right">
+      <div class="event__flavor">
         <div class="reputation">
           <div class="reputation__track">
             <ul>
@@ -65,37 +29,41 @@
           </div>
           <div class="reputation__level">1</div>
         </div>
-        <div class="mechanics">
-          <ul>
-            <li class="mechanic">Level 3</li>
-            <li class="mechanic">Level 5</li>
-            <li class="mechanic">Level 8</li>
-          </ul>
-        </div>
-        <div class="abilities">
-          <div>
-            Available ability points: <span id="available-ability-points"></span>
+      </div>
+      <div class="event__container">
+        <div class="event event--prev">
+          <header class="event__ribbon">
+            <div class="event__name">
+              <strong class="event__year">1251</strong>
+              <h1></h1>
+            </div>
+          </header>
+          <div class="event__subtitle">
+            <em></em>
           </div>
-          <ul>
-            <li class="ability" onclick="unlockAbility(0, event)">
-              <div class="ability__checkmark"></div>
-              <span>Gain a card that has 2 wild connections</span>
-            </li>
-            <li class="ability" onclick="unlockAbility(1, event)">
-              <div class="ability__checkmark"></div>
-              <span>Gain a card that adds a new slot to the right</span>
-            </li>
-            <li class="ability" onclick="unlockAbility(2, event)">
-              <div class="ability__checkmark"></div>
-              <span>Gain a card that increases the margin window by 2 more for this round</span>
-            </li>
-            <li class="ability" onclick="unlockAbility(3, event)">
-              <div class="ability__checkmark"></div>
-              <span>Gain a card that converts 1 excitement in X hype (X based on position)</span>
-            </li>
-          </ul>
+          <button class="next-battle__button" onclick="nextEvent()">Next event ></button>
         </div>
-      </section>
+        <div class="event">
+          <header class="event__ribbon">
+            <div class="event__name">
+              <strong class="event__year">1251</strong>
+              <h1></h1>
+            </div>
+          </header>
+          <div class="event__subtitle">
+            <em></em>
+          </div>
+          <button class="host-battle__button">Host Battle</button>
+        </div>
+      </div>
+      <div class="battle-end-screen">
+        <div class="battle-end-screen__content">
+          <ul class="battle-end-screen__rewards">
+            
+          </ul>
+          <button class="" onclick="storyContinue()">Continue</button>
+        </div>
+      </div>
     </div>
   </div>
   <div class="screen screen--tournament">
@@ -120,9 +88,6 @@
             <div class="hype-meter__marker__audience"><div></div></div>
             <div class="hype-meter__marker__preview"></div>
           </ul>
-          <h4 class="battlefield__audience__excitement">
-            &#128513; <span>0</span>
-          </h4>
           <ul class="audience__percentages">
             <li class="audience__percentage audience__percentage--mix"></li>
             <li class="audience__percentage audience__percentage--gu"></li>
@@ -130,6 +95,9 @@
             <li class="audience__percentage audience__percentage--sa"></li>
             <li class="audience__percentage audience__percentage--pu"></li>
           </ul>
+          <h4 class="battlefield__audience__excitement">
+            &#128513; <span>0</span>
+          </h4>
         </div>
       </div>
       <div class="battlefield__knights">

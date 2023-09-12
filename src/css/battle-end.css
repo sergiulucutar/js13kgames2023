@@ -1,0 +1,47 @@
+.battle-end-screen {
+  position: absolute;
+  display: none;
+  bottom: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: var(--c_background);
+  opacity: 0;
+
+  transition: opacity 0.4s var(--ease-out);
+}
+
+.battle-end-screen--show {
+  display: block;
+  opacity: 1;
+}
+
+.battle-end-screen__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
+}
+
+.battle-end-screen__rewards {
+  display: flex;
+}
+
+.battle-end-screen__rewards li {
+  position: relative;
+  width: 200px;
+  padding: 20px;
+  margin: 10px;
+  border: 5px double var(--c_secondary);
+  text-align: center;
+  cursor: pointer;
+}
+
+.battle-end-screen__rewards .battle-end-screen__reward--selected {
+  border: 8px solid var(--c_secondary);
+}

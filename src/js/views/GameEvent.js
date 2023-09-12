@@ -7,7 +7,6 @@ class GameEvents {
     this.currentEventEventEl = document.querySelector('.event:last-child');
     this.titleEl = document.querySelector('.event__name h1');
     this.subtitleEl = document.querySelector('.event__subtitle em');
-    this.battlesEl = document.querySelector('.event__tournament');
   }
 
   init() {
@@ -33,25 +32,8 @@ class GameEvents {
   _renderEvent(event, element) {
     const titleEl = element.querySelector('.event__name h1');
     const subtitleEl = element.querySelector('.event__subtitle em');
-    const battlesEl = element.querySelector('.event__tournament');
     titleEl.textContent = event.name;
     subtitleEl.textContent = event.subtitle;
-
-    let html = '';
-    event.battles.forEach(battle => {
-      switch (battle) {
-        case 1:
-          html += '<li>Melee Combat</li>';
-          break;
-        case 2:
-          html += '<li>Jousting</li>';
-          break;
-        case 3:
-          html += '<li>Archery</li>';
-          break;
-      }
-    });
-    battlesEl.innerHTML = html;
   }
 
   _chooseRandomEvent() {

@@ -19,12 +19,13 @@ const audienceSkinColorPalette = [
   '#683925'
 ];
 class AudienceCanvas {
-  constructor() {
+  constructor(state) {
+    this.state = state;
     this.canvas = '';
     this.people = [];
     this.emoji = [];
 
-    this.headSize = 20;
+    this.headSize = 16;
     this.perRow = Math.round(window.innerWidth / 23);
     this.init();
   }
@@ -34,7 +35,14 @@ class AudienceCanvas {
     this.emojiWrapperEl = document.querySelector('.audience__emoji');
     this.resizeCanvas();
     this.ctx = this.canvas.getContext('2d');
-    for (let i = 0; i < 240; i++) {
+
+    const audienceCount = Math.min(this.state.level * 30, 250);
+    // A set number I found working fine during testing
+    this.perRow = audienceCount / 2;
+    this.rowOffset =
+      window.innerWidth / 2 - (this.perRow * this.headSize * 1.3) / 2;
+
+    for (let i = 0; i < audienceCount; i++) {
       const randomSkinColor =
         audienceSkinColorPalette[random(0, audienceSkinColorPalette.length)];
       const randomClothColor1 =
@@ -46,15 +54,23 @@ class AudienceCanvas {
           random(0, audienceClothsColorPalette.length)
         ];
       const size = Math.random() * 0.3 + 0.8;
-      this.people.push({
+      const pep = {
         yPositionOffset: -Math.random() * this.headSize,
         headSize: this.headSize * size,
         skinColor: randomSkinColor,
         clothsColor: [randomClothColor1, randomClothColor2],
         size,
         excitementLevel: random(4, 9),
-        jumpingAnimationOffset: 0
-      });
+        jumpingAnimationOffset: 0,
+        positionReachAnimOffset: 1,
+        positionReached: false
+      };
+      pep.position = this._getPepPosition(pep, this.people.length);
+      pep.startPositionOffset = [
+        random(0, window.innerHeight) - pep.position.x,
+        -random(100, 400) - pep.position.y
+      ];
+      this.people.push(pep);
     }
   }
 
@@ -92,21 +108,31 @@ class AudienceCanvas {
   render() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    let x, y;
-    this.people.forEach((pep, i) => {
-      y =
-        Math.floor(i / this.perRow) * (this.headSize * 2.5) +
-        (1 - pep.size) * pep.headSize * 6 +
-        pep.yPositionOffset;
+    let index = this.people.length - 1,
+      pep,
+      x,
+      y;
+    while (index >= 0) {
+      pep = this.people[index];
+      index -= 1;
+
+      x = pep.position.x;
+      y = pep.position.y;
+
+      if (!pep.positionReached) {
+        x += pep.startPositionOffset[0] * pep.positionReachAnimOffset;
+        y += pep.startPositionOffset[1] * pep.positionReachAnimOffset;
+        pep.positionReachAnimOffset -= 0.004 * pep.excitementLevel;
+
+        if (pep.positionReachAnimOffset <= 0.05) {
+          pep.positionReached = true;
+        }
+      }
 
       if (pep.jumpingAnimationOffset > 0) {
         y -= Math.sin(3.14 * pep.jumpingAnimationOffset) * pep.headSize * 2;
-        pep.jumpingAnimationOffset -= 0.1;
+        pep.jumpingAnimationOffset -= 0.05;
       }
-
-      x =
-        (i % this.perRow) * this.headSize * 1.2 +
-        (this.headSize / 2) * Math.floor(i / this.perRow);
 
       this.ctx.fillStyle = pep.skinColor;
       this.ctx.fillRect(x, y, pep.headSize, pep.headSize);
@@ -119,7 +145,7 @@ class AudienceCanvas {
         pep.headSize,
         pep.headSize * 2
       );
-    });
+    }
   }
 
   renderEmoji() {
@@ -130,5 +156,24 @@ class AudienceCanvas {
       });
       this.emoji = this.emoji.filter(emoji => emoji.style.opacity > 0);
     }
+  }
+
+  _getPepPosition(pep, index) {
+    let y =
+      this.canvas.height -
+      pep.headSize * 7 -
+      Math.floor(index / this.perRow) * (this.headSize * 2.5) -
+      (1 - pep.size) * pep.headSize * 6 -
+      pep.yPositionOffset;
+
+    let x =
+      (index % this.perRow) * this.headSize * 1.2 +
+      this.rowOffset +
+      (this.headSize / 2) * Math.floor(index / this.perRow);
+
+    return {
+      x,
+      y
+    };
   }
 }

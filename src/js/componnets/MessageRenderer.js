@@ -4,7 +4,7 @@ class MessageRenderer {
     const element = wrapperEl.querySelector('em');
 
     const message = this._getMessage(cards);
-    element.textContent = message;
+    element.textContent = `...a ${message} attack...`;
     wrapperEl.classList.add('committed-message--shown');
 
     setTimeout(() => {

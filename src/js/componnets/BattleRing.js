@@ -6,11 +6,11 @@ class BattleRing {
     this.isAttacking = false;
   }
 
-  init(attackingKnightIndex, attacksCountPerKnight) {
+  init(attackingKnightIndex) {
     this.knightsEl.innerHTML = '';
     this.state.selectedKnights.forEach(knight => {
-      knight.health = 20;
-      knight.attacks = attacksCountPerKnight;
+      knight.health = 2 + this.state.level * 3 + random(0, 2);
+      knight.attacks = this.state.level + 2;
     });
 
     this.selectedKnights = this.state.selectedKnights.map(knight => {
@@ -25,7 +25,7 @@ class BattleRing {
         // isAttacking: false,
         // isAnimating: false,
         // nextAnimationTimestamp: null,
-        attacksCount: attacksCountPerKnight
+        attacksCount: knight.attacks
       };
     });
     this.initAttack(attackingKnightIndex);

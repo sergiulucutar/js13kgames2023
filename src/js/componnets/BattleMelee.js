@@ -7,7 +7,7 @@ class BattleMelee {
     this.committedCards = [];
 
     this.audience = new BattleAudience();
-    this.audienceCanvas = new AudienceCanvas();
+    this.audienceCanvas = new AudienceCanvas(state);
     this.audienceCanvas.animate();
 
     this.battleRing = new BattleRing(state);
@@ -279,10 +279,40 @@ class BattleMelee {
 
   _renderPlaceHolders() {
     let html = '';
+    this.cardsEl.classList.remove(
+      'battlefield__cards__wrapper--attack-delay-left'
+    );
+    this.cardsEl.classList.remove(
+      'battlefield__cards__wrapper--attack-delay-right'
+    );
+    if (this.attackingKnightIndex === 0) {
+      this.cardsEl.classList.add('battlefield__cards__wrapper--attack-left');
+    } else {
+      this.cardsEl.classList.add('battlefield__cards__wrapper--attack-right');
+    }
+
     for (let i = 0; i < this.attackValue; i++) {
       html += '<div class="card__slot"></div>';
     }
     this.cardsEl.innerHTML = html;
+
+    setTimeout(() => {
+      if (this.attackingKnightIndex === 0) {
+        this.cardsEl.classList.add(
+          'battlefield__cards__wrapper--attack-delay-left'
+        );
+        this.cardsEl.classList.remove(
+          'battlefield__cards__wrapper--attack-left'
+        );
+      } else {
+        this.cardsEl.classList.add(
+          'battlefield__cards__wrapper--attack-delay-right'
+        );
+        this.cardsEl.classList.remove(
+          'battlefield__cards__wrapper--attack-right'
+        );
+      }
+    }, 0);
   }
 
   _registerEvents() {

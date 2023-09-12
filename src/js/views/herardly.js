@@ -135,22 +135,7 @@ class Herardly {
 
     this._renderLevel();
     this._renderReputationTrack();
-  }
-
-  selectKnight(knight) {
-    this.state.selectKnight(knight);
-
-    this._renderSelectedKnight(knight, this.state.selectedKnights.length);
-  }
-
-  showState() {
-    const stateKnightsEl = document.querySelector('.state__knights');
-
-    this.state.knights.forEach(knight => {
-      const rendering = getKnightRendering(knight);
-      stateKnightsEl.appendChild(rendering);
-      rendering.addEventListener('click', () => selectKnight(knight));
-    });
+    this.gameEvents.render();
   }
 
   nextEvent() {
@@ -160,26 +145,30 @@ class Herardly {
   render() {
     this._renderLevel();
     this._renderReputationTrack();
-    this._renderAbilityPoints();
-    this._renderMechanics();
-    this.gameEvents.render();
   }
 
-  _renderAbilityPoints() {
-    const element = document.querySelector('#available-ability-points');
-    element.textContent = this.state.availableAbilityPoints;
+  chooseReward(cardIndex, event) {
+    event.target.parentNode.childNodes.forEach(node =>
+      node.classList.remove('battle-end-screen__reward--selected')
+    );
+    event.target.classList.add('battle-end-screen__reward--selected');
+    this.state.addCard(cardIndex);
   }
 
-  _renderMechanics() {
-    this.state.mechanics.forEach((mechanic, index) => {
-      if (mechanic.isUnlocked) {
-        const element = document.querySelector(
-          `.mechanic:nth-child(${index + 1})`
-        );
-        element.textContent = mechanic.text;
-        element.classList.add('mechanic--unlocked');
-      }
+  toggleBattleEndScreen() {
+    const rewardsEl = document.querySelector('.battle-end-screen');
+    rewardsEl.classList.toggle('battle-end-screen--show');
+  }
+
+  showRewards() {
+    const rewardsEl = document.querySelector('.battle-end-screen__rewards');
+    const cards = this.state.getRewards();
+    let html = '';
+    cards.forEach(cardIndex => {
+      html += `<li onclick="chooseReward(${cardIndex}, event)">${cardPowerText[cardIndex].power}</li>`;
     });
+
+    rewardsEl.innerHTML = html;
   }
 
   _renderSelectedKnight(knight, index) {

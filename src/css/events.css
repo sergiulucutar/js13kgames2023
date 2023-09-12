@@ -1,7 +1,7 @@
 
 .event {
   position: relative;
-  width: 50%;
+  width: 100%;
   height: 100%;
 }
 
@@ -10,8 +10,11 @@
 }
 
 .event__flavor {
+  position: relative;
+  display: flex;
+  flex-direction: row-reverse;
   width: 100%;
-  height: 10%;
+  height: 100%;
 
   background:
     radial-gradient(27% 29% at right ,var(--_g)) calc(var(--s)/ 2) var(--s),
@@ -20,6 +23,17 @@
     radial-gradient(29% 27% at bottom,var(--_g)) 0 calc(var(--s)/-2)
     var(--c_primary_v);
   background-size: calc(2*var(--s)) calc(2*var(--s));
+}
+
+.event__flavor::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  background: linear-gradient(to right, transparent, var(--c_primary_v) 80%);
 }
 
 .event__ribbon {
@@ -57,12 +71,16 @@
 
 .event__name {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .event__name h1 {
   position: absolute;
-  margin: 0;
-  margin-left: 10px;
+  margin-top: 60px;
+
 }
 
 .event__year {
@@ -73,34 +91,28 @@
 }
 
 .event__subtitle {
-  display: grid;
-  grid-template-columns: 50% repeat(3, 1fr);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
 
   margin-top: 10%;
 }
 
 .event__subtitle em {
-  grid-column: 2 / span 2;
-}
-
-.event__tournament {
-  margin: 10% 0;
-}
-
-.event__tournament li {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  font-size: 1.4rem;
-}
-
-.event__tournament li span {
-  grid-column: 2 / -1;
+  display: block;
+  width: 200px;
+  text-align: center;
 }
 
 .next-battle__button, .host-battle__button {
   position: absolute;
   bottom: 50px;
   left: 50%;
+
+  padding: 12px 24px;
+
+  font-size: 2rem;
+
   transform: translateX(-50%);
 }
