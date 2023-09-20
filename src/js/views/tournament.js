@@ -4,6 +4,7 @@ class Tournament {
   }
 
   initBattle() {
+    console.log('INIT BATTLE');
     this.battle = new BattleMelee(this.state);
   }
 }

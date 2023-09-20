@@ -1,8 +1,15 @@
 
 .event {
   position: relative;
-  width: 100%;
+  width: 50%;
   height: 100%;
+}
+
+.event__container {
+  display: flex;
+  width: 200%;
+
+  transition: transform 1s var(--ease-out);
 }
 
 .event--prev {
@@ -33,7 +40,7 @@
   width: 100%;
   height: 100%;
 
-  background: linear-gradient(to right, transparent, var(--c_primary_v) 80%);
+  background: linear-gradient(to right, transparent, var(--c_primary_v), transparent);
 }
 
 .event__ribbon {
@@ -96,7 +103,7 @@
   align-items: center;
   width: 100%;
 
-  margin-top: 10%;
+  margin: 6% 0;
 }
 
 .event__subtitle em {
@@ -115,4 +122,12 @@
   font-size: 2rem;
 
   transform: translateX(-50%);
+}
+
+.next-battle__button {
+  display: none;
+}
+
+.next-battle__button.shown {
+  display: block;
 }

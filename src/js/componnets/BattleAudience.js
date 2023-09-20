@@ -1,26 +1,32 @@
 class BattleAudience {
-  constructor() {
+  constructor(level) {
     this.meter = 0;
     this.excitement = 0;
+    this.requiredExcitement = level * 20;
     this.margin = 1;
+
+    const base = 15;
+
     this.percentage = {
-      faith: Math.round((Math.random() * 0.15 + 0.1) * 10),
-      cunning: Math.round((Math.random() * 0.15 + 0.1) * 10),
-      strength: Math.round((Math.random() * 0.15 + 0.1) * 10),
-      noblesse: Math.round((Math.random() * 0.15 + 0.1) * 10)
+      faith: Math.round((Math.random() * 0.3 + 0.1) * base),
+      cunning: Math.round((Math.random() * 0.3 + 0.1) * base),
+      strength: Math.round((Math.random() * 0.3 + 0.1) * base)
     };
-    this.percentage.mix =
-      10 -
-      this.percentage.strength -
+    this.percentage.noblesse =
+      base -
       this.percentage.faith -
       this.percentage.cunning -
-      this.percentage.noblesse;
+      this.percentage.strength;
 
-    this.hypePreviewEl = document.querySelector('.hype-meter__marker__preview');
-    this.meterEl = document.querySelector('.hype-meter__marker__audience');
+    this.hypePreviewEl = document.querySelector('.audience__hype__new');
+    this.meterEl = document.querySelector('.audience__hype__old');
     this.excitementEl = document.querySelector(
       '.battlefield__audience__excitement span'
     );
+
+    this.renderMeters();
+    this.renderPercentages();
+    this.renderHypePreview();
   }
 
   deflate() {
@@ -32,7 +38,7 @@ class BattleAudience {
   }
 
   getGeneratedCheersTotal(difference, committedCards) {
-    let total = difference * this.percentage.mix;
+    let total = 0;
     for (let i = 0; i < committedCards.length - 1; i++) {
       if (committedCards[i].meta.isRightActive) {
         switch (committedCards[i].colorRight) {
@@ -70,20 +76,26 @@ class BattleAudience {
     element = document.querySelector('.audience__percentage--pu');
     element.style.width = `${this.percentage.noblesse * 10}%`;
     element.textContent = this.percentage.noblesse;
-
-    element = document.querySelector('.audience__percentage--mix');
-    element.style.width = `${this.percentage.mix * 10}%`;
-    element.textContent = this.percentage.mix;
   }
 
   renderMeters() {
-    this.meterEl.style.transform = `translateX(${this.meter * 100}px)`;
-    this.excitementEl.textContent = this.excitement;
+    this.meterEl.textContent = `[${this.meter - this.margin}, ${
+      this.meter + this.margin
+    }]`;
+    this.renderExcitement();
+  }
+
+  renderExcitement() {
+    this.excitementEl.textContent =
+      this.excitement + '/' + this.requiredExcitement;
   }
 
   renderHypePreview(committedValue) {
-    this.hypePreviewEl.style.transform = `translateX(-${
-      1000 - committedValue * 100
-    }px)`;
+    this.hypePreviewEl.textContent = committedValue;
+    if (committedValue > this.meter) {
+      this.hypePreviewEl.parentNode.classList.add('green');
+    } else {
+      this.hypePreviewEl.parentNode.classList.remove('green');
+    }
   }
 }

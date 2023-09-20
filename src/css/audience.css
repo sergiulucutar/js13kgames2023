@@ -5,7 +5,7 @@
 .battlefield__audience canvas {
   position: absolute;
   width: 100%;
-  height: 100%;
+  height: 160%;
   /* z-index: -1; */
 }
 
@@ -26,24 +26,16 @@
 .battlefield__audience__data {
   position: absolute;
   width: 100%;
-  height: 100%;
 
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  flex-direction: column-reverse;
+  align-items: center;
 
   z-index: 5;
 }
 
-.battlefield__audience__meter {
-  padding: 4px;
-  margin: 10px;
-  font-size: 3rem;
-  font-weight: bold;
-  background-color: white;
-}
-
 .battlefield__audience__excitement {
+  border-radius: 16px;
   padding: 4px;
   margin: 10px;
   font-size: 3rem;
@@ -51,63 +43,32 @@
   background-color: white;
 }
 
-.hype-meter {
-  position: relative;
-  display: flex;
-  height: 60px;
-
-  overflow: hidden;
-}
-
-.hype-meter li {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  width: 100px;
-  height: 40px;
-  padding: 10px;
-
-  color: black;
+.audience__hype {
+  padding: 8px;
+  border-radius: 18px;
   background-color: white;
+  font-size: 2rem;
 }
 
-.hype-meter li:not(:first-child) {
-  border-left: 1px solid black;
-}
-
-.hype-meter__marker__audience {
-  position: absolute;
-  top: 40px;
-
-  transition: transform 0.4s var(--ease-out);
-}
-
-.hype-meter__marker__audience div {
-  width: 300px;
-  height: 15px;
-  background-color: #CA3C25;
-  border: 3px solid white;
-
-  transform: translateX(calc(-50% + 50px));
-}
-
-.hype-meter__marker__preview {
-  position: absolute;
-  top: 10px;
+.audience__hype__content {
   width: 100%;
-  height: 20px;
+  height: 100%;
+  padding: 8px 16px;
+  border-radius: 18px;
+}
 
-  background-color: #859277;
-  transform: translateX(-100%);
-  transition: transform 0.4s var(--ease-out);
+.audience__hype__content.green {
+  background-color: #99C2A7;
 }
 
 .audience__percentages {
   display: flex;
   background-color: white;
   padding: 4px 8px;
+  margin-top: 40px;
+  margin-bottom: 20px;
   width: 500px;
+  border-radius: 10%;
 }
 
 .audience__percentage {

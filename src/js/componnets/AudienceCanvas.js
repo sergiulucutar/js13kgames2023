@@ -101,8 +101,9 @@ class AudienceCanvas {
   }
 
   resizeCanvas() {
-    this.canvas.width = 1900;
-    this.canvas.height = 218;
+    const bounds = this.canvas.getBoundingClientRect();
+    this.canvas.width = bounds.width;
+    this.canvas.height = bounds.height;
   }
 
   render() {
@@ -163,13 +164,15 @@ class AudienceCanvas {
       this.canvas.height -
       pep.headSize * 7 -
       Math.floor(index / this.perRow) * (this.headSize * 2.5) -
-      (1 - pep.size) * pep.headSize * 6 -
+      (1 - pep.size) * pep.headSize * 6 +
       pep.yPositionOffset;
 
     let x =
       (index % this.perRow) * this.headSize * 1.2 +
       this.rowOffset +
       (this.headSize / 2) * Math.floor(index / this.perRow);
+
+    y -= Math.sin(3.14 * (x / window.innerWidth)) * 260;
 
     return {
       x,

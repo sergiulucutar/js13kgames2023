@@ -4,6 +4,7 @@
   grid-template-rows: 20% auto;
   width: 100%;
   height: 100%;
+  overflow: hidden;
 }
 
 .state__knights {
@@ -59,3 +60,54 @@
   background-color: #C9D0C8;
 }
 
+.records {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  display: flex;
+
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+.records li {
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100px;
+  height: 100px;
+
+  border-radius: 50%;
+
+  margin: 20px;
+}
+
+.records li::before {
+  content: '';
+  position: absolute;
+  width: 120%;
+  height: 120%;
+
+  border: 3px solid var(--c_ternary);
+  border-radius: 50%;
+}
+
+.records li.record--win {
+  background-color: #99C2A7;
+}
+
+.records li.record--loss {
+  background-color: #E88873;
+}
+
+.records li.record--win::before {
+  border-color: #99C2A7;
+}
+
+.records li.record--loss::before {
+  border-color: #E88873;
+}

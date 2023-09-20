@@ -1,10 +1,7 @@
 class State {
   constructor() {
     this.level = 1;
-    this.reputation = {
-      earned: 0,
-      required: 3
-    };
+    this.records = [];
     this.unlockedCards = [0, 1, 2, 3, 4];
 
     this.knights = [
@@ -201,25 +198,15 @@ class State {
 
   addCard(cardIndex) {
     this.unlockedCards.push(cardIndex);
+    this.defaultDeck = this._generateDefaultDeck();
   }
 
-  addEarnedReputation(amount) {
-    this.reputation.earned += amount;
-
-    if (this.reputation.earned >= this.reputation.required) {
-      while (this.reputation.earned >= this.reputation.required) {
-        this.level += 1;
-        this.showRewards = true;
-        this.reputation.required = this._getReputationRequired(this.level);
-        this.reputation.earned -= this.reputation.required;
-        this.reputation.earned = Math.max(0, this.reputation.earned);
-      }
-    } else if (this.reputation.earned < 0) {
-      this.level -= 1;
-      this.level = Math.max(1, this.level);
-      this.reputation.required = this._getReputationRequired(this.level);
-      this.reputation.earned += this.reputation.required;
+  addEarnedReputation(goToNextLevel) {
+    if (goToNextLevel) {
+      this.level += 1;
     }
+    this.records.push(goToNextLevel);
+    console.log('recods ', this.records);
   }
 
   getRewards() {

@@ -39,25 +39,28 @@ window.onload = () => {
   window.onBattleEnded = data => {
     heraldryScreen.classList.add('screen--visible');
     tournamentScreen.classList.remove('screen--visible');
+    const nextButton = document.querySelector('.next-battle__button');
+    nextButton.classList.remove('shown');
 
-    state.addEarnedReputation(data.generatedExcitement);
+    state.addEarnedReputation(data.goToNextLevel);
+
     heraldry.toggleBattleEndScreen();
     if (state.showRewards) {
       heraldry.showRewards();
     }
+    heraldry.gameEvents.next();
     heraldry.gameEvents.render();
+    heraldry.render();
   };
 
   window.storyContinue = () => {
     heraldry.toggleBattleEndScreen();
   };
 
-  window.nextEvent = () => {
-    heraldry.nextEvent();
-  };
-
   window.chooseReward = (cardIndex, event) => {
     heraldry.chooseReward(cardIndex, event);
+    const nextButton = document.querySelector('.next-battle__button');
+    nextButton.classList.add('shown');
   };
 
   document

@@ -1,12 +1,14 @@
 class BattleMelee {
   constructor(state) {
     this.state = state;
+    this.requiredExcitement = state.level * 100;
+
     this.attackingKnightIndex = 0;
 
     this.attackValue = 0;
     this.committedCards = [];
 
-    this.audience = new BattleAudience();
+    this.audience = new BattleAudience(this.state.level);
     this.audienceCanvas = new AudienceCanvas(state);
     this.audienceCanvas.animate();
 
@@ -54,7 +56,9 @@ class BattleMelee {
 
     if (this._isBattleEnded()) {
       onBattleEnded({
-        generatedExcitement: this.audience.excitement
+        generatedExcitement: this.audience.excitement,
+        goToNextLevel:
+          this.audience.excitement >= this.audience.requiredExcitement
       });
       return;
     }
@@ -107,20 +111,6 @@ class BattleMelee {
     this.hand.drawUntilFull();
     this.hand.render();
   }
-
-  // TODO: Refatcor
-  // takeBack() {
-  //   if (this.committedCards.length) {
-  //     const card = this.committedCards.pop().card;
-  //     if (card === 'flip') {
-  //       this.hand.addCard(this._flippedCommittedCard.pop());
-  //     } else {
-  //       this.hand.addCard(card);
-  //     }
-  //     this.battlefieldCards.removeChild(this.battlefieldCards.lastChild);
-  //     this.hand.render();
-  //   }
-  // }
 
   /* Private */
 
@@ -214,7 +204,7 @@ class BattleMelee {
     this._resolveSelectedCardPower(generatedExcitement);
     this.knightsStats.update(this.attackingKnightIndex, this.attackValue);
 
-    this.audience.renderMeters();
+    this.audience.renderExcitement();
     this.battleRing.attackResolved();
     this.knightsStats.render();
     this.hand.render();

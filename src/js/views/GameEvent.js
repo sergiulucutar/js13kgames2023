@@ -2,7 +2,7 @@ class GameEvents {
   constructor(state) {
     this.state = state;
 
-    this.eventScreen = document.querySelector('.heraldry--left');
+    this.eventContainerEl = document.querySelector('.event__container');
     this.prevEventEl = document.querySelector('.event--prev');
     this.currentEventEventEl = document.querySelector('.event:last-child');
     this.titleEl = document.querySelector('.event__name h1');
@@ -13,7 +13,7 @@ class GameEvents {
     this.currentEvent = this._chooseRandomEvent();
 
     window.nextEvent = () =>
-      (this.eventScreen.style.transform = `translateX(-50%)`);
+      (this.eventContainerEl.style.transform = `translateX(-50%)`);
   }
 
   next() {

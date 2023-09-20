@@ -133,8 +133,7 @@ class Herardly {
     this.gameEvents = new GameEvents(state);
     this.gameEvents.init();
 
-    this._renderLevel();
-    this._renderReputationTrack();
+    this._renderRecords();
     this.gameEvents.render();
   }
 
@@ -143,8 +142,7 @@ class Herardly {
   }
 
   render() {
-    this._renderLevel();
-    this._renderReputationTrack();
+    this._renderRecords();
   }
 
   chooseReward(cardIndex, event) {
@@ -179,28 +177,19 @@ class Herardly {
     slot.appendChild(rendering);
   }
 
-  _renderLevel() {
-    const levelEl = document.querySelector('.reputation__level');
-    levelEl.textContent = this.state.level;
-  }
-
-  _renderReputationTrack() {
-    const reputationTrackEl = document.querySelector('.reputation__track ul');
-    const reputationTrackMeterEl = document.querySelector(
-      '.reputation__track__meter'
-    );
+  _renderRecords() {
+    const recordsEl = document.querySelector('.records');
     let html = '';
-    for (let i = 0; i < this.state.reputation.required; i++) {
-      html += '<li class="reputation__track__step"></li>';
+    for (let i = 0; i < 3; i++) {
+      if (this.state.records[i]) {
+        html += '<li class="record--win" />';
+      } else if (this.state.records[i] === false) {
+        html += '<li class="record--loss" />';
+      } else {
+        html += '<li />';
+      }
     }
-    reputationTrackEl.innerHTML = html;
-
-    const reputationTrackSegment =
-      reputationTrackEl.getBoundingClientRect().width /
-      this.state.reputation.required;
-
-    reputationTrackMeterEl.style.transform = `translateX(${
-      reputationTrackSegment * this.state.reputation.earned
-    }px)`;
+    console.log('HTML ', html, this.state.records);
+    recordsEl.innerHTML = html;
   }
 }
